@@ -11,14 +11,14 @@ import time
 # PAGE CONFIGURATION & METADATA
 # ==========================================
 st.set_page_config(
-    page_title="FinIntel Terminal | Institutional Retail Intelligence",
+    page_title="YoloTech Terminal | Institutional Retail Intelligence",
     page_icon="🕸️",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
 # ==========================================
-# INSTITUTIONAL TRADING DESK CSS THEME (SPIDER-VERSE GLOW)
+# PERMANENT DARK THEME & SPIDER-VERSE GLOW CSS
 # ==========================================
 st.markdown("""
 <style>
@@ -27,17 +27,49 @@ st.markdown("""
     html, body, [class*="css"] {
         font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     }
+
+    /* Hard Lock Dark Canvas */
+    html, body, [data-testid="stAppViewContainer"], [data-testid="stHeader"] {
+        background-color: #06070B !important;
+        color: #E6EDF3 !important;
+    }
+
+    /* Force Dark Sidebar */
+    [data-testid="stSidebar"], [data-testid="stSidebar"] > div:first-child {
+        background-color: #0E1118 !important;
+        color: #E6EDF3 !important;
+        border-right: 1px solid rgba(226, 54, 54, 0.2) !important;
+    }
+
+    /* Force Dark Dropdowns and Form Controls */
+    div[data-baseweb="select"] > div, 
+    div[data-baseweb="input"] > div,
+    div[data-baseweb="popover"],
+    ul[role="listbox"] {
+        background-color: #12161F !important;
+        color: #FFFFFF !important;
+        border-color: rgba(255, 255, 255, 0.15) !important;
+    }
+
+    /* Dropdown Option Items */
+    li[role="option"] {
+        background-color: #12161F !important;
+        color: #E6EDF3 !important;
+    }
+    li[role="option"]:hover {
+        background-color: #1F2937 !important;
+    }
     
     /* Background Canvas with Spider-Verse Geometric Web Backlight */
     .stApp {
-        background-color: #06070B;
+        background-color: #06070B !important;
         background-image: 
             radial-gradient(at 0% 0%, rgba(226, 54, 54, 0.12) 0px, transparent 45%),
             radial-gradient(at 100% 100%, rgba(0, 119, 255, 0.12) 0px, transparent 45%),
             radial-gradient(at 50% 50%, rgba(226, 54, 54, 0.04) 0px, transparent 65%),
-            repeating-radial-gradient(circle at 50% 50%, transparent 0, transparent 40px, rgba(255, 255, 255, 0.015) 41px, transparent 42px);
-        background-attachment: fixed;
-        color: #E6EDF3;
+            repeating-radial-gradient(circle at 50% 50%, transparent 0, transparent 40px, rgba(255, 255, 255, 0.015) 41px, transparent 42px) !important;
+        background-attachment: fixed !important;
+        color: #E6EDF3 !important;
     }
 
     /* Terminal Header */
@@ -228,11 +260,7 @@ st.markdown("""
         box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
     }
 
-    /* Sidebar Adjustments */
-    [data-testid="stSidebar"] {
-        background-color: #0E1118 !important;
-        border-right: 1px solid rgba(226, 54, 54, 0.2) !important;
-    }
+    /* Sidebar Labels */
     [data-testid="stSidebar"] label p {
         font-family: 'JetBrains Mono', monospace !important;
         font-size: 11px !important;
@@ -290,7 +318,7 @@ st.markdown("""
 # Top Navigation Bar
 st.markdown("""
 <div class="terminal-nav">
-    <div class="terminal-title">🕸️ FININTEL WORKSTATION // MULTI-AGENT INTELLIGENCE</div>
+    <div class="terminal-title">🕸️ YOLOTECH WORKSTATION // MULTI-AGENT INTELLIGENCE</div>
     <div class="terminal-status">● LIVE FEED CONNECTED</div>
 </div>
 """, unsafe_allow_html=True)
