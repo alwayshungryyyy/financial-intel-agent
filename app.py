@@ -34,16 +34,22 @@ st.markdown("""
         color: #E2E8F0 !important;
     }
 
-    /* Ambient Layered Mesh & Micro-Grid Background */
+    /* Ambient Layered Mesh & Spider-Verse Web Texture Background */
     .stApp {
         background-color: #05070B !important;
         background-image: 
-            radial-gradient(circle at 10% 8%, rgba(0, 212, 255, 0.12) 0px, transparent 38%),
-            radial-gradient(circle at 90% 90%, rgba(226, 54, 54, 0.12) 0px, transparent 42%),
-            radial-gradient(circle at 50% 50%, rgba(124, 58, 237, 0.05) 0px, transparent 60%),
+            /* Top Left Web-Shooter Neon Cyan Flare */
+            radial-gradient(circle at 8% 6%, rgba(0, 212, 255, 0.14) 0px, transparent 36%),
+            /* Bottom Right Spider-Man Crimson Flare */
+            radial-gradient(circle at 92% 94%, rgba(226, 54, 54, 0.15) 0px, transparent 40%),
+            /* Central Deep Violet Web Node */
+            radial-gradient(circle at 50% 50%, rgba(124, 58, 237, 0.05) 0px, transparent 65%),
+            /* Geometric Spider-Web Structural Line Grid */
+            repeating-radial-gradient(circle at 50% 50%, transparent 0, transparent 45px, rgba(226, 54, 54, 0.02) 46px, transparent 47px),
+            /* Precision Trading Grid Lines */
             linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
             linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px) !important;
-        background-size: 100% 100%, 100% 100%, 100% 100%, 36px 36px, 36px 36px !important;
+        background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 36px 36px, 36px 36px !important;
         background-attachment: fixed !important;
         color: #E2E8F0 !important;
     }
@@ -213,10 +219,10 @@ st.markdown("""
             radial-gradient(circle at 95% 8%, rgba(226, 54, 54, 0.18) 0px, transparent 48%),
             /* Bottom-Left Web-Shooter Cyan Flare */
             radial-gradient(circle at 5% 92%, rgba(0, 212, 255, 0.12) 0px, transparent 48%),
-            /* Comic Web Halftone Texture */
-            radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+            /* Comic Halftone Micro-Dot Pattern */
+            radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
             /* Subtle Geometric Spider-Web Watermark SVG */
-            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cpath d='M80 0 L80 160 M0 80 L160 80 M23 23 L137 137 M23 137 L137 23' stroke='rgba(226,54,54,0.06)' stroke-width='1'/%3E%3Cpolygon points='80,30 115,45 130,80 115,115 80,130 45,115 30,80 45,45' fill='none' stroke='rgba(0,212,255,0.05)' stroke-width='1'/%3E%3Cpolygon points='80,55 98,62 105,80 98,98 80,105 62,98 55,80 62,62' fill='none' stroke='rgba(226,54,54,0.06)' stroke-width='1'/%3E%3C/svg%3E") !important;
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cpath d='M80 0 L80 160 M0 80 L160 80 M23 23 L137 137 M23 137 L137 23' stroke='rgba(226,54,54,0.08)' stroke-width='1'/%3E%3Cpolygon points='80,30 115,45 130,80 115,115 80,130 45,115 30,80 45,45' fill='none' stroke='rgba(0,212,255,0.06)' stroke-width='1'/%3E%3Cpolygon points='80,55 98,62 105,80 98,98 80,105 62,98 55,80 62,62' fill='none' stroke='rgba(226,54,54,0.08)' stroke-width='1'/%3E%3C/svg%3E") !important;
         background-size: 100% 100%, 100% 100%, 20px 20px, 160px 160px !important;
         backdrop-filter: blur(16px);
         border: 1px solid rgba(226, 54, 54, 0.25) !important;
