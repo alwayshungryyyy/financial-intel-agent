@@ -12,16 +12,13 @@ import time
 # ==========================================
 st.set_page_config(
     page_title="FinIntel Terminal | Institutional Retail Intelligence",
-    page_icon="📈",
+    page_icon="🕸️",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
 # ==========================================
-# INSTITUTIONAL TRADING DESK CSS THEME
-# ==========================================
-# ==========================================
-# INSTITUTIONAL TRADING DESK CSS THEME (GLOW ENHANCED)
+# INSTITUTIONAL TRADING DESK CSS THEME (SPIDER-VERSE GLOW)
 # ==========================================
 st.markdown("""
 <style>
@@ -31,28 +28,29 @@ st.markdown("""
         font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     }
     
-    /* Background Canvas with Subtle Ambient Glow Grid */
+    /* Background Canvas with Spider-Verse Geometric Web Backlight */
     .stApp {
-        background-color: #07090E;
+        background-color: #06070B;
         background-image: 
-            radial-gradient(at 0% 0%, rgba(88, 166, 255, 0.08) 0px, transparent 50%),
-            radial-gradient(at 100% 100%, rgba(163, 113, 247, 0.08) 0px, transparent 50%),
-            radial-gradient(at 50% 50%, rgba(35, 134, 54, 0.04) 0px, transparent 60%);
+            radial-gradient(at 0% 0%, rgba(226, 54, 54, 0.12) 0px, transparent 45%),
+            radial-gradient(at 100% 100%, rgba(0, 119, 255, 0.12) 0px, transparent 45%),
+            radial-gradient(at 50% 50%, rgba(226, 54, 54, 0.04) 0px, transparent 65%),
+            repeating-radial-gradient(circle at 50% 50%, transparent 0, transparent 40px, rgba(255, 255, 255, 0.015) 41px, transparent 42px);
         background-attachment: fixed;
         color: #E6EDF3;
     }
 
     /* Terminal Header */
     .terminal-nav {
-        background: rgba(22, 27, 34, 0.85);
+        background: rgba(18, 22, 31, 0.85);
         backdrop-filter: blur(12px);
-        border-bottom: 1px solid #30363D;
+        border-bottom: 1px solid rgba(226, 54, 54, 0.3);
         padding: 14px 24px;
         margin: -1rem -1rem 1.5rem -1rem;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
     }
     .terminal-title {
         font-family: 'JetBrains Mono', monospace;
@@ -84,23 +82,23 @@ st.markdown("""
         color: #8B949E;
         margin-top: 22px;
         margin-bottom: 14px;
-        border-left: 3px solid #58A6FF;
+        border-left: 3px solid #E23636;
         padding-left: 10px;
     }
 
-    /* Metric Cards with Inset Shadow */
+    /* Metric Cards with Inset Web Shadow */
     .metric-container {
         background: rgba(18, 22, 31, 0.85);
         backdrop-filter: blur(8px);
-        border: 1px solid #30363D;
+        border: 1px solid rgba(255, 255, 255, 0.08);
         border-radius: 10px;
         padding: 18px;
         box-shadow: inset 0 3px 10px rgba(0, 0, 0, 0.75), 0 4px 12px rgba(0, 0, 0, 0.3);
         transition: all 0.25s ease-in-out;
     }
     .metric-container:hover {
-        border-color: #58A6FF;
-        box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.6), 0 6px 18px rgba(88, 166, 255, 0.25);
+        border-color: #E23636;
+        box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.6), 0 6px 18px rgba(226, 54, 54, 0.25);
         transform: translateY(-2px);
     }
     .metric-title {
@@ -127,7 +125,7 @@ st.markdown("""
         border-radius: 4px;
     }
     .tag-bull { background: rgba(35, 134, 54, 0.2); color: #3FB950; border: 1px solid rgba(46, 160, 67, 0.4); }
-    .tag-bear { background: rgba(218, 54, 51, 0.2); color: #F85149; border: 1px solid rgba(248, 81, 73, 0.4); }
+    .tag-bear { background: rgba(226, 54, 54, 0.2); color: #FF6B6B; border: 1px solid rgba(226, 54, 54, 0.4); }
     .tag-neutral { background: rgba(139, 148, 158, 0.2); color: #C9D1D9; border: 1px solid rgba(139, 148, 158, 0.4); }
 
     /* Glowing Container for Pie Charts */
@@ -137,12 +135,12 @@ st.markdown("""
         border: 1px solid rgba(88, 166, 255, 0.3);
         border-radius: 12px;
         padding: 16px;
-        box-shadow: 0 0 20px rgba(88, 166, 255, 0.12), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+        box-shadow: 0 0 20px rgba(0, 119, 255, 0.12), inset 0 1px 1px rgba(255, 255, 255, 0.05);
         transition: all 0.3s ease;
     }
     .pie-glow-box:hover {
         border-color: #58A6FF;
-        box-shadow: 0 0 28px rgba(88, 166, 255, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+        box-shadow: 0 0 28px rgba(0, 119, 255, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.1);
         transform: translateY(-2px);
     }
 
@@ -184,20 +182,23 @@ st.markdown("""
         min-height: 85px;
     }
 
-    /* Article Boxes with Dark Gradient Backgrounds & Deep Shadows */
+    /* Article Boxes with Spider-Web Textured Glassmorphism */
     .agent-box {
-        background: linear-gradient(135deg, rgba(22, 27, 34, 0.85) 0%, rgba(15, 19, 25, 0.85) 100%);
+        background: 
+            radial-gradient(circle at 95% 10%, rgba(226, 54, 54, 0.07) 0%, transparent 40%),
+            linear-gradient(135deg, rgba(22, 27, 34, 0.9) 0%, rgba(15, 19, 25, 0.9) 100%);
         backdrop-filter: blur(8px);
-        border: 1px solid #30363D;
+        border: 1px solid rgba(255, 255, 255, 0.08);
         border-radius: 10px;
         padding: 20px 24px;
         margin-bottom: 20px;
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.03);
         transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        position: relative;
     }
     .agent-box:hover {
-        border-color: #58A6FF;
-        box-shadow: 0 12px 28px rgba(88, 166, 255, 0.15);
+        border-color: #E23636;
+        box-shadow: 0 12px 28px rgba(226, 54, 54, 0.15);
     }
     .agent-header-title {
         font-size: 15px !important;
@@ -216,7 +217,7 @@ st.markdown("""
     .citation-badge {
         display: inline-block;
         background: #090D12;
-        border: 1px solid #30363D;
+        border: 1px solid rgba(88, 166, 255, 0.3);
         border-radius: 4px;
         padding: 4px 10px;
         font-family: 'JetBrains Mono', monospace;
@@ -229,8 +230,8 @@ st.markdown("""
 
     /* Sidebar Adjustments */
     [data-testid="stSidebar"] {
-        background-color: #12161F !important;
-        border-right: 1px solid #30363D !important;
+        background-color: #0E1118 !important;
+        border-right: 1px solid rgba(226, 54, 54, 0.2) !important;
     }
     [data-testid="stSidebar"] label p {
         font-family: 'JetBrains Mono', monospace !important;
@@ -242,30 +243,30 @@ st.markdown("""
 
     /* Action Trigger Button */
     div.stButton > button {
-        background: #238636;
+        background: linear-gradient(135deg, #E23636 0%, #B31919 100%);
         color: #FFFFFF;
         font-family: 'JetBrains Mono', monospace;
         font-size: 13px;
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.05em;
-        border: 1px solid rgba(240, 246, 252, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.15);
         border-radius: 6px;
         padding: 10px 20px;
         width: 100%;
-        box-shadow: 0 4px 12px rgba(35, 134, 54, 0.3);
+        box-shadow: 0 4px 14px rgba(226, 54, 54, 0.35);
         transition: all 0.2s ease;
     }
     div.stButton > button:hover {
-        background: #2EA043;
+        background: linear-gradient(135deg, #FF4D4D 0%, #D62222 100%);
         border-color: #58A6FF;
-        box-shadow: 0 6px 16px rgba(35, 134, 54, 0.45);
+        box-shadow: 0 6px 18px rgba(226, 54, 54, 0.55);
     }
 
     /* Telemetry KPI Metrics */
     [data-testid="stMetric"] {
         background: rgba(18, 22, 31, 0.85);
-        border: 1px solid #30363D;
+        border: 1px solid rgba(255, 255, 255, 0.08);
         border-radius: 6px;
         padding: 12px 16px;
         box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.6), 0 4px 12px rgba(0, 0, 0, 0.3);
@@ -285,6 +286,15 @@ st.markdown("""
     }
 </style>
 """, unsafe_allow_html=True)
+
+# Top Navigation Bar
+st.markdown("""
+<div class="terminal-nav">
+    <div class="terminal-title">🕸️ FININTEL WORKSTATION // MULTI-AGENT INTELLIGENCE</div>
+    <div class="terminal-status">● LIVE FEED CONNECTED</div>
+</div>
+""", unsafe_allow_html=True)
+
 # ==========================================
 # 1. RAG VECTOR DATABASE (REGULATORY FILINGS)
 # ==========================================
@@ -338,7 +348,7 @@ def fetch_market_data(ticker: str):
         high = data['High'].squeeze()
         low = data['Low'].squeeze()
 
-        # Dimension 1: Price Momentum (14-Day RSI)
+        # Momentum (14-Day RSI)
         delta = close.diff()
         gain = (delta.where(delta > 0, 0)).rolling(window=14).mean()
         loss = (-delta.where(delta < 0, 0)).rolling(window=14).mean()
@@ -347,13 +357,13 @@ def fetch_market_data(ticker: str):
         rsi = float(rsi_series.dropna().iloc[-1])
         mom_status = "BULLISH" if rsi > 55 else ("BEARISH" if rsi < 45 else "NEUTRAL")
 
-        # Dimension 2: Volume Anomaly vs 20-Day SMA
+        # Volume Anomaly vs 20-Day SMA
         vol_sma20 = float(volume.rolling(20).mean().dropna().iloc[-1])
         curr_vol = float(volume.dropna().iloc[-1])
         vol_ratio = curr_vol / (vol_sma20 + 1e-9)
         vol_status = "VOLUME SPIKE" if vol_ratio > 1.35 else ("LOW TURNOVER" if vol_ratio < 0.7 else "NORMAL TURNOVER")
 
-        # Dimension 3: Volatility (Average True Range / Price Ratio)
+        # Volatility (ATR / Price Ratio)
         high_low = (high - low) / close
         volatility_idx = float(high_low.rolling(14).mean().dropna().iloc[-1] * 100)
         vola_status = "HIGH VOLATILITY" if volatility_idx > 2.2 else "CONTROLLED VOLATILITY"
@@ -379,25 +389,62 @@ def fetch_market_data(ticker: str):
 # ==========================================
 # 3. INTERACTIVE TRADINGVIEW-STYLE GRAPH
 # ==========================================
-# 3. Pie Chart Analytics Row with Neon Outer Glow
-            st.markdown('<div class="pro-header">ANALYTICAL BREAKDOWN & PORTFOLIO ALLOCATION</div>', unsafe_allow_html=True)
-            pie_col1, pie_col2 = st.columns(2)
+def render_professional_chart(df, ticker):
+    fig = make_subplots(
+        rows=2, cols=1, shared_xaxes=True,
+        vertical_spacing=0.03,
+        row_heights=[0.75, 0.25]
+    )
 
-            with pie_col1:
-                st.markdown("""
-                <div class="pie-glow-box">
-                    <div style="font-family:'JetBrains Mono';font-size:11px;color:#8B949E;margin-bottom:6px;">QUANT SIGNAL WEIGHT ALLOCATION</div>
-                """, unsafe_allow_html=True)
-                st.plotly_chart(render_signal_pie(), use_container_width=True)
-                st.markdown('</div>', unsafe_allow_html=True)
+    df['SMA20'] = df['Close'].rolling(20).mean()
+    df['SMA50'] = df['Close'].rolling(50).mean()
 
-            with pie_col2:
-                st.markdown(f"""
-                <div class="pie-glow-box">
-                    <div style="font-family:'JetBrains Mono';font-size:11px;color:#8B949E;margin-bottom:6px;">TARGET PORTFOLIO DISTRIBUTION [{profile_risk.upper()}]</div>
-                """, unsafe_allow_html=True)
-                st.plotly_chart(render_portfolio_pie(profile_risk), use_container_width=True)
-                st.markdown('</div>', unsafe_allow_html=True)
+    fig.add_trace(go.Candlestick(
+        x=df.index,
+        open=df['Open'], high=df['High'],
+        low=df['Low'], close=df['Close'],
+        name="Price Action",
+        increasing_line_color='#26A69A',
+        decreasing_line_color='#E23636'
+    ), row=1, col=1)
+
+    fig.add_trace(go.Scatter(
+        x=df.index, y=df['SMA20'],
+        mode='lines', name='SMA 20',
+        line=dict(color='#58A6FF', width=1.5)
+    ), row=1, col=1)
+
+    fig.add_trace(go.Scatter(
+        x=df.index, y=df['SMA50'],
+        mode='lines', name='SMA 50',
+        line=dict(color='#E23636', width=1.5)
+    ), row=1, col=1)
+
+    vol_colors = ['#26A69A' if c >= o else '#E23636' for c, o in zip(df['Close'], df['Open'])]
+    fig.add_trace(go.Bar(
+        x=df.index, y=df['Volume'],
+        name="Volume",
+        marker_color=vol_colors, opacity=0.75
+    ), row=2, col=1)
+
+    fig.update_layout(
+        template="plotly_dark",
+        paper_bgcolor='#161B22',
+        plot_bgcolor='#0D1117',
+        margin=dict(l=8, r=8, t=8, b=8),
+        height=380,
+        showlegend=True,
+        legend=dict(
+            orientation="h", yanchor="bottom", y=1.02,
+            xanchor="right", x=1,
+            font=dict(family="JetBrains Mono", size=10, color="#8B949E")
+        ),
+        xaxis_rangeslider_visible=False,
+        font=dict(family="JetBrains Mono", color="#8B949E")
+    )
+    fig.update_xaxes(gridcolor='#21262D', showgrid=True)
+    fig.update_yaxes(gridcolor='#21262D', showgrid=True)
+    return fig
 
 # ==========================================
 # 4. PIE CHART GENERATORS
@@ -405,11 +452,11 @@ def fetch_market_data(ticker: str):
 def render_signal_pie():
     labels = ['Momentum (RSI)', 'Volume Anomaly', 'ATR Volatility']
     values = [40, 35, 25]
-    colors = ['#58A6FF', '#3FB950', '#E3B341']
+    colors = ['#58A6FF', '#E23636', '#3FB950']
 
     fig = go.Figure(data=[go.Pie(
         labels=labels, values=values, hole=.50,
-        marker=dict(colors=colors, line=dict(color='#07090E', width=3)),
+        marker=dict(colors=colors, line=dict(color='#06070B', width=3)),
         textinfo='label+percent',
         textfont=dict(family="JetBrains Mono", size=11, color="#F0F6FC")
     )])
@@ -432,15 +479,15 @@ def render_portfolio_pie(risk_profile):
     elif risk_profile == "Aggressive":
         labels = ['Growth Equities', 'Momentum Options', 'Cash Reserve']
         values = [70, 20, 10]
-        colors = ['#A371F7', '#3FB950', '#E3B341']
+        colors = ['#E23636', '#58A6FF', '#3FB950']
     else:
         labels = ['Core Equities', 'Fixed Income', 'Tactical Cash']
         values = [50, 35, 15]
-        colors = ['#3FB950', '#58A6FF', '#E3B341']
+        colors = ['#3FB950', '#58A6FF', '#E23636']
 
     fig = go.Figure(data=[go.Pie(
         labels=labels, values=values, hole=.50,
-        marker=dict(colors=colors, line=dict(color='#07090E', width=3)),
+        marker=dict(colors=colors, line=dict(color='#06070B', width=3)),
         textinfo='label+percent',
         textfont=dict(family="JetBrains Mono", size=11, color="#F0F6FC")
     )])
@@ -454,6 +501,7 @@ def render_portfolio_pie(risk_profile):
         showlegend=False
     )
     return fig
+
 # ==========================================
 # 5. MULTI-AGENT REASONING PIPELINE
 # ==========================================
@@ -464,7 +512,7 @@ def synthesize_profile_verdict(signals, risk_level, filing_source):
     if risk_level == "Conservative":
         if is_volatile or not is_bullish:
             rec = "CAPITAL PRESERVATION / AVOID"
-            color = "#F85149"
+            color = "#E23636"
             plan = f"Current price action shows elevated ATR volatility ({signals['volatility']['index']}%) which exceeds conservative drawdown parameters. Recommend maintaining cash allocation or seeking shelter in low-duration sovereign debt."
         else:
             rec = "MEASURED ACCUMULATION"
@@ -477,7 +525,7 @@ def synthesize_profile_verdict(signals, risk_level, filing_source):
             plan = f"RSI momentum ({signals['momentum']['rsi']}) and positive volume expansion confirm an active trend breakout. Risk parameters justify aggressive positioning targeting near-term resistance."
         else:
             rec = "TACTICAL ACCUMULATION ON PULLBACKS"
-            color = "#E3B341"
+            color = "#E23636"
             plan = "Asset is in a secondary consolidation range. Favorable risk-to-reward ratio for swing long entries upon confirmed support retests."
     else:
         rec = "HOLD / SYSTEMATIC EXPOSURE"
@@ -604,17 +652,25 @@ if st.button("RUN MULTI-AGENT RESEARCH"):
             chart = render_professional_chart(df, ticker_input)
             st.plotly_chart(chart, use_container_width=True)
 
-            # 3. Pie Chart Analytics Row
+            # 3. Pie Chart Analytics Row with Neon Outer Glow
             st.markdown('<div class="pro-header">ANALYTICAL BREAKDOWN & PORTFOLIO ALLOCATION</div>', unsafe_allow_html=True)
             pie_col1, pie_col2 = st.columns(2)
 
             with pie_col1:
-                st.markdown('<div style="font-family:\'JetBrains Mono\';font-size:11px;color:#8B949E;margin-bottom:6px;">QUANT SIGNAL WEIGHT ALLOCATION</div>', unsafe_allow_html=True)
+                st.markdown("""
+                <div class="pie-glow-box">
+                    <div style="font-family:'JetBrains Mono';font-size:11px;color:#8B949E;margin-bottom:6px;">QUANT SIGNAL WEIGHT ALLOCATION</div>
+                """, unsafe_allow_html=True)
                 st.plotly_chart(render_signal_pie(), use_container_width=True)
+                st.markdown('</div>', unsafe_allow_html=True)
 
             with pie_col2:
-                st.markdown(f'<div style="font-family:\'JetBrains Mono\';font-size:11px;color:#8B949E;margin-bottom:6px;">TARGET PORTFOLIO DISTRIBUTION [{profile_risk.upper()}]</div>', unsafe_allow_html=True)
+                st.markdown(f"""
+                <div class="pie-glow-box">
+                    <div style="font-family:'JetBrains Mono';font-size:11px;color:#8B949E;margin-bottom:6px;">TARGET PORTFOLIO DISTRIBUTION [{profile_risk.upper()}]</div>
+                """, unsafe_allow_html=True)
                 st.plotly_chart(render_portfolio_pie(profile_risk), use_container_width=True)
+                st.markdown('</div>', unsafe_allow_html=True)
 
             # 4. Personalized Intelligence & Risk Calibration
             if show_split_view:
@@ -634,8 +690,8 @@ if st.button("RUN MULTI-AGENT RESEARCH"):
                 a_rec, a_col, a_plan = synthesize_profile_verdict(signals, "Aggressive", agent_outputs["citation"])
                 with p_col2:
                     st.markdown(f"""
-                    <div class="verdict-card" style="border-color: #A371F7;">
-                        <div class="verdict-header" style="color: #A371F7;">INVESTOR PROFILE: AGGRESSIVE</div>
+                    <div class="verdict-card" style="border-color: #E23636;">
+                        <div class="verdict-header" style="color: #E23636;">INVESTOR PROFILE: AGGRESSIVE</div>
                         <div class="verdict-title" style="color: {a_col};">{a_rec}</div>
                         <div class="verdict-body">{a_plan}</div>
                     </div>
@@ -649,7 +705,7 @@ if st.button("RUN MULTI-AGENT RESEARCH"):
                 </div>
                 """, unsafe_allow_html=True)
 
-            # 5. Specialized Multi-Agent Reasoning Logs with Gradient Backgrounds & Shadows
+            # 5. Specialized Multi-Agent Reasoning Logs with Spider-Web Textured Cards
             st.markdown('<div class="pro-header">INDEPENDENT AGENT REASONING TRACES</div>', unsafe_allow_html=True)
 
             # Article 1: Technical Agent
