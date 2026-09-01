@@ -18,7 +18,7 @@ st.set_page_config(
 )
 
 # ==========================================
-# INSTITUTIONAL CYBER-DARK CSS THEME
+# INSTITUTIONAL CYBER-DARK & SPIDER-VERSE CSS THEME
 # ==========================================
 st.markdown("""
 <style>
@@ -38,13 +38,9 @@ st.markdown("""
     .stApp {
         background-color: #05070B !important;
         background-image: 
-            /* Top Left Neon Cyan/Blue Flare */
             radial-gradient(circle at 10% 8%, rgba(0, 212, 255, 0.12) 0px, transparent 38%),
-            /* Bottom Right Spider Crimson Flare */
             radial-gradient(circle at 90% 90%, rgba(226, 54, 54, 0.12) 0px, transparent 42%),
-            /* Central Deep Violet Ambience */
             radial-gradient(circle at 50% 50%, rgba(124, 58, 237, 0.05) 0px, transparent 60%),
-            /* Precision Trading Grid Lines */
             linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
             linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px) !important;
         background-size: 100% 100%, 100% 100%, 100% 100%, 36px 36px, 36px 36px !important;
@@ -57,14 +53,14 @@ st.markdown("""
         background-color: rgba(9, 12, 18, 0.95) !important;
         backdrop-filter: blur(16px) !important;
         color: #E2E8F0 !important;
-        border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+        border-right: 1px solid rgba(226, 54, 54, 0.2) !important;
     }
 
     /* Terminal Navigation Bar */
     .terminal-nav {
         background: rgba(13, 17, 26, 0.8) !important;
         backdrop-filter: blur(20px);
-        border-bottom: 1px solid rgba(88, 166, 255, 0.2);
+        border-bottom: 1px solid rgba(226, 54, 54, 0.3);
         padding: 16px 28px;
         margin: -1rem -1rem 1.5rem -1rem;
         display: flex;
@@ -122,8 +118,8 @@ st.markdown("""
         transition: all 0.25s ease;
     }
     .metric-container:hover {
-        border-color: rgba(88, 166, 255, 0.5);
-        box-shadow: inset 0 1px 6px rgba(0, 0, 0, 0.6), 0 10px 30px rgba(0, 212, 255, 0.15);
+        border-color: rgba(226, 54, 54, 0.5);
+        box-shadow: inset 0 1px 6px rgba(0, 0, 0, 0.6), 0 10px 30px rgba(226, 54, 54, 0.18);
         transform: translateY(-2px);
     }
     .metric-title {
@@ -207,29 +203,41 @@ st.markdown("""
         min-height: 85px;
     }
 
-    /* Agent Article Boxes with Glassmorphic Texture */
+    /* ==================================================== */
+    /* SPIDER-MAN INSPIRED ARTICLE BOXES (AESTHETIC WEB)    */
+    /* ==================================================== */
     .agent-box {
-        background: 
-            radial-gradient(circle at 95% 10%, rgba(226, 54, 54, 0.08) 0%, transparent 45%),
-            linear-gradient(135deg, rgba(17, 23, 34, 0.85) 0%, rgba(9, 12, 18, 0.85) 100%);
-        backdrop-filter: blur(14px);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 12px;
-        padding: 22px 26px;
-        margin-bottom: 20px;
-        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.04);
-        transition: all 0.25s ease;
+        background-color: rgba(10, 14, 22, 0.9) !important;
+        background-image: 
+            /* Top-Right Spider-Crimson Radial Flare */
+            radial-gradient(circle at 95% 8%, rgba(226, 54, 54, 0.18) 0px, transparent 48%),
+            /* Bottom-Left Web-Shooter Cyan Flare */
+            radial-gradient(circle at 5% 92%, rgba(0, 212, 255, 0.12) 0px, transparent 48%),
+            /* Comic Web Halftone Texture */
+            radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+            /* Subtle Geometric Spider-Web Watermark SVG */
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cpath d='M80 0 L80 160 M0 80 L160 80 M23 23 L137 137 M23 137 L137 23' stroke='rgba(226,54,54,0.06)' stroke-width='1'/%3E%3Cpolygon points='80,30 115,45 130,80 115,115 80,130 45,115 30,80 45,45' fill='none' stroke='rgba(0,212,255,0.05)' stroke-width='1'/%3E%3Cpolygon points='80,55 98,62 105,80 98,98 80,105 62,98 55,80 62,62' fill='none' stroke='rgba(226,54,54,0.06)' stroke-width='1'/%3E%3C/svg%3E") !important;
+        background-size: 100% 100%, 100% 100%, 20px 20px, 160px 160px !important;
+        backdrop-filter: blur(16px);
+        border: 1px solid rgba(226, 54, 54, 0.25) !important;
+        border-radius: 14px;
+        padding: 24px 28px;
+        margin-bottom: 22px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        position: relative;
+        overflow: hidden;
     }
     .agent-box:hover {
-        border-color: rgba(226, 54, 54, 0.5);
-        box-shadow: 0 14px 34px rgba(0, 0, 0, 0.65), 0 0 20px rgba(226, 54, 54, 0.15);
-        transform: translateY(-1px);
+        border-color: rgba(226, 54, 54, 0.6) !important;
+        box-shadow: 0 14px 40px rgba(0, 0, 0, 0.8), 0 0 24px rgba(226, 54, 54, 0.22);
+        transform: translateY(-2px);
     }
     .agent-header-title {
-        font-size: 15px !important;
+        font-size: 15.5px !important;
         font-weight: 700 !important;
         color: #F8FAFC !important;
-        margin-bottom: 10px !important;
+        margin-bottom: 12px !important;
         display: flex;
         align-items: center;
         gap: 8px;
@@ -237,20 +245,20 @@ st.markdown("""
     .agent-content-text {
         font-size: 13.5px !important;
         color: #CBD5E1 !important;
-        line-height: 1.65 !important;
+        line-height: 1.7 !important;
     }
     .citation-badge {
         display: inline-block;
-        background: rgba(5, 7, 11, 0.8);
-        border: 1px solid rgba(88, 166, 255, 0.3);
+        background: rgba(5, 7, 11, 0.85);
+        border: 1px solid rgba(0, 212, 255, 0.4);
         border-radius: 6px;
         padding: 5px 12px;
         font-family: 'JetBrains Mono', monospace;
         font-size: 11px;
         font-weight: 600;
-        color: #58A6FF;
-        margin-top: 12px;
-        box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
+        color: #00F5FF;
+        margin-top: 14px;
+        box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.7);
     }
 
     /* Sidebar Dropdowns and Inputs */
