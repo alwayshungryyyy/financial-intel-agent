@@ -3,18 +3,20 @@ import yfinance as yf
 import pandas as pd
 import numpy as np
 import chromadb
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
 import time
 
 # Page Configuration
 st.set_page_config(
-    page_title="FININTEL // CYBER-TERMINAL",
+    page_title="FININTEL // CYBER-TERMINAL PRO",
     page_icon="⚡",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
 # ==========================================
-# GEN-Z HYPER-GLOW & ELECTRIC CSS STYLING (FIXED CONTRAST)
+# GEN-Z HYPER-GLOW & CYBER CSS
 # ==========================================
 st.markdown("""
 <style>
@@ -24,7 +26,6 @@ st.markdown("""
         font-family: 'Space Grotesk', sans-serif;
     }
 
-    /* Deep Obsidian Canvas */
     .stApp {
         background: #05050A;
         background-image: 
@@ -33,22 +34,19 @@ st.markdown("""
             radial-gradient(at 50% 100%, rgba(57, 255, 20, 0.1) 0px, transparent 50%);
     }
 
-    /* Keyframes for Glowing Effects */
     @keyframes neonBorder {
         0% { border-color: rgba(0, 245, 255, 0.6); box-shadow: 0 0 15px rgba(0, 245, 255, 0.3); }
         50% { border-color: rgba(255, 0, 128, 0.6); box-shadow: 0 0 25px rgba(255, 0, 128, 0.4); }
         100% { border-color: rgba(0, 245, 255, 0.6); box-shadow: 0 0 15px rgba(0, 245, 255, 0.3); }
     }
 
-    /* Cyber Hero Banner */
     .hero-container {
         background: rgba(12, 12, 22, 0.85);
         backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
         border: 1px solid rgba(0, 245, 255, 0.3);
         border-radius: 24px;
-        padding: 28px 36px;
-        margin-bottom: 25px;
+        padding: 26px 34px;
+        margin-bottom: 22px;
         animation: neonBorder 6s infinite ease-in-out;
     }
 
@@ -60,11 +58,11 @@ st.markdown("""
         text-transform: uppercase;
         color: #00F5FF;
         text-shadow: 0 0 8px rgba(0, 245, 255, 0.6);
-        margin-bottom: 6px;
+        margin-bottom: 4px;
     }
 
     .hero-title {
-        font-size: 34px;
+        font-size: 32px;
         font-weight: 800;
         letter-spacing: -0.03em;
         background: linear-gradient(90deg, #00F5FF 0%, #FF007F 50%, #FFE600 100%);
@@ -75,11 +73,11 @@ st.markdown("""
 
     .hero-subtitle {
         color: #CBD5E1;
-        font-size: 14px;
-        margin-top: 8px;
+        font-size: 13px;
+        margin-top: 6px;
     }
 
-    /* --- SIDEBAR HIGH-CONTRAST LABELS --- */
+    /* Sidebar High Contrast */
     .sidebar-cyber-header {
         font-family: 'JetBrains Mono', monospace;
         font-size: 13px;
@@ -92,7 +90,6 @@ st.markdown("""
         margin-top: 12px;
     }
 
-    /* Fix Streamlit Sidebar Default Label Visibility */
     [data-testid="stSidebar"] label p {
         font-family: 'JetBrains Mono', monospace !important;
         font-size: 12px !important;
@@ -103,7 +100,6 @@ st.markdown("""
         text-shadow: 0 0 6px rgba(56, 189, 248, 0.4) !important;
     }
 
-    /* Checkbox Label Text */
     [data-testid="stSidebar"] .stCheckbox span {
         font-family: 'JetBrains Mono', monospace !important;
         font-size: 12px !important;
@@ -111,15 +107,39 @@ st.markdown("""
         color: #F8FAFC !important;
     }
 
-    /* Section Subheaders */
-    h2, h3, [data-testid="stHeadingWithActionElements"] {
-        font-family: 'Space Grotesk', sans-serif !important;
-        color: #F8FAFC !important;
-        font-weight: 700 !important;
-        letter-spacing: -0.01em !important;
+    /* Architecture Flow Box */
+    .flow-box {
+        background: rgba(18, 18, 32, 0.7);
+        border: 1px solid rgba(0, 245, 255, 0.2);
+        border-radius: 16px;
+        padding: 16px 20px;
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
     }
 
-    /* Holographic Cyber Metric Cards */
+    .flow-node {
+        background: rgba(30, 41, 59, 0.6);
+        border: 1px solid #38BDF8;
+        border-radius: 10px;
+        padding: 8px 14px;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 11px;
+        font-weight: 700;
+        color: #F8FAFC;
+        text-align: center;
+    }
+
+    .flow-arrow {
+        color: #FF007F;
+        font-size: 18px;
+        font-weight: 900;
+    }
+
+    /* Metric Cards */
     .metric-card {
         background: rgba(18, 18, 32, 0.85);
         backdrop-filter: blur(14px);
@@ -128,12 +148,10 @@ st.markdown("""
         padding: 20px;
         transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
-
     .metric-card:hover {
         transform: translateY(-6px) scale(1.02);
         border-color: #00F5FF;
         box-shadow: 0 10px 30px rgba(0, 245, 255, 0.3);
-        background: rgba(26, 26, 46, 0.95);
     }
 
     .metric-label {
@@ -143,7 +161,6 @@ st.markdown("""
         text-transform: uppercase;
         letter-spacing: 0.1em;
         color: #38BDF8;
-        text-shadow: 0 0 6px rgba(56, 189, 248, 0.3);
     }
 
     .metric-val {
@@ -152,10 +169,8 @@ st.markdown("""
         font-weight: 800;
         color: #FFFFFF;
         margin: 8px 0;
-        text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
     }
 
-    /* Electric Status Pills */
     .status-pill {
         display: inline-block;
         font-family: 'JetBrains Mono', monospace;
@@ -164,61 +179,42 @@ st.markdown("""
         padding: 4px 12px;
         border-radius: 9999px;
     }
-    .badge-bull { 
-        background: rgba(57, 255, 20, 0.15); 
-        color: #39FF14; 
-        border: 1px solid rgba(57, 255, 20, 0.5);
-        box-shadow: 0 0 10px rgba(57, 255, 20, 0.3); 
-    }
-    .badge-bear { 
-        background: rgba(255, 0, 90, 0.15); 
-        color: #FF005A; 
-        border: 1px solid rgba(255, 0, 90, 0.5);
-        box-shadow: 0 0 10px rgba(255, 0, 90, 0.3); 
-    }
-    .badge-mid { 
-        background: rgba(0, 245, 255, 0.15); 
-        color: #00F5FF; 
-        border: 1px solid rgba(0, 245, 255, 0.5);
-        box-shadow: 0 0 10px rgba(0, 245, 255, 0.3); 
-    }
+    .badge-bull { background: rgba(57, 255, 20, 0.15); color: #39FF14; border: 1px solid rgba(57, 255, 20, 0.5); }
+    .badge-bear { background: rgba(255, 0, 90, 0.15); color: #FF005A; border: 1px solid rgba(255, 0, 90, 0.5); }
+    .badge-mid  { background: rgba(0, 245, 255, 0.15); color: #00F5FF; border: 1px solid rgba(0, 245, 255, 0.5); }
 
-    /* Neon Verdict Container */
+    /* Verdict Container */
     .verdict-container {
         background: linear-gradient(135deg, rgba(20, 10, 30, 0.95) 0%, rgba(10, 20, 35, 0.95) 100%);
         border-radius: 20px;
         border: 1px solid #FF007F;
         box-shadow: 0 0 25px rgba(255, 0, 127, 0.3);
-        padding: 26px;
-        margin: 22px 0;
+        padding: 24px;
+        margin: 18px 0;
     }
 
-    /* --- STREAMLIT NATIVE METRICS (TELEMETRY CARDS) STYLING --- */
+    /* Telemetry Metrics */
     [data-testid="stMetric"] {
         background: rgba(18, 18, 32, 0.85);
         border: 1px solid rgba(192, 132, 252, 0.3);
         border-radius: 16px;
         padding: 16px 20px;
-        box-shadow: 0 4px 15px rgba(192, 132, 252, 0.1);
     }
     [data-testid="stMetricLabel"] p {
         font-family: 'JetBrains Mono', monospace !important;
         font-size: 11px !important;
         font-weight: 700 !important;
         text-transform: uppercase !important;
-        letter-spacing: 0.1em !important;
         color: #C084FC !important;
-        text-shadow: 0 0 8px rgba(192, 132, 252, 0.5) !important;
     }
     [data-testid="stMetricValue"] div {
         font-family: 'JetBrains Mono', monospace !important;
         font-size: 24px !important;
         font-weight: 800 !important;
         color: #00F5FF !important;
-        text-shadow: 0 0 10px rgba(0, 245, 255, 0.5) !important;
     }
 
-    /* High-Voltage Primary Button */
+    /* Primary Button */
     div.stButton > button {
         background: linear-gradient(90deg, #FF007F 0%, #7928CA 50%, #00F5FF 100%);
         background-size: 200% auto;
@@ -226,7 +222,6 @@ st.markdown("""
         font-family: 'Space Grotesk', sans-serif;
         font-size: 16px;
         font-weight: 800;
-        letter-spacing: 0.05em;
         text-transform: uppercase;
         border: none;
         border-radius: 14px;
@@ -240,7 +235,6 @@ st.markdown("""
         box-shadow: 0 0 35px rgba(0, 245, 255, 0.7);
     }
 
-    /* Glass Log Containers */
     .agent-log {
         background: rgba(15, 15, 28, 0.8);
         border: 1px solid rgba(0, 245, 255, 0.2);
@@ -250,81 +244,35 @@ st.markdown("""
         font-size: 14px;
         line-height: 1.6;
     }
-    .agent-log:hover {
-        border-color: #00F5FF;
-        box-shadow: 0 0 12px rgba(0, 245, 255, 0.2);
-    }
 </style>
-
-<!-- WEB AUDIO SYNTHESIZER -->
-<script>
-    const AudioContext = window.AudioContext || window.webkitAudioContext;
-    let audioCtx = null;
-
-    function getAudioContext() {
-        if (!audioCtx) audioCtx = new AudioContext();
-        if (audioCtx.state === 'suspended') audioCtx.resume();
-        return audioCtx;
-    }
-
-    function playCyberHover() {
-        try {
-            const ctx = getAudioContext();
-            const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
-            osc.type = 'sawtooth';
-            osc.frequency.setValueAtTime(450, ctx.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(900, ctx.currentTime + 0.05);
-            gain.gain.setValueAtTime(0.04, ctx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.05);
-            osc.connect(gain);
-            gain.connect(ctx.destination);
-            osc.start();
-            osc.stop(ctx.currentTime + 0.05);
-        } catch(e) {}
-    }
-
-    function playCyberLaunch() {
-        try {
-            const ctx = getAudioContext();
-            const now = ctx.currentTime;
-            [440, 554.37, 659.25, 880, 1108.73].forEach((freq, i) => {
-                const osc = ctx.createOscillator();
-                const gain = ctx.createGain();
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(freq, now + i * 0.04);
-                gain.gain.setValueAtTime(0.08, now + i * 0.04);
-                gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.04 + 0.2);
-                osc.connect(gain);
-                gain.connect(ctx.destination);
-                osc.start(now + i * 0.04);
-                osc.stop(now + i * 0.04 + 0.2);
-            });
-        } catch(e) {}
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        document.querySelectorAll('button').forEach(btn => {
-            btn.addEventListener('click', playCyberLaunch);
-        });
-        document.querySelectorAll('.metric-card, .stSelectbox, [data-testid="stMetric"]').forEach(el => {
-            el.addEventListener('mouseenter', playCyberHover);
-        });
-    });
-</script>
 """, unsafe_allow_html=True)
 
 # Cyber Banner
 st.markdown("""
 <div class="hero-container">
-    <div class="hero-tag">⚡ Autonomous Neural Network // v2.6</div>
-    <div class="hero-title">FININTEL CYBER-TERMINAL</div>
-    <div class="hero-subtitle">Real-time multi-agent market synthesis, regulatory RAG verification, and personalized algorithmic intelligence.</div>
+    <div class="hero-tag">⚡ Autonomous Neural Network // Multi-Agent Pipeline</div>
+    <div class="hero-title">FININTEL CYBER-TERMINAL PRO</div>
+    <div class="hero-subtitle">Real-time market signal extraction, regulatory RAG grounding, and risk-calibrated synthesized intelligence.</div>
+</div>
+""", unsafe_allow_html=True)
+
+# Architecture Pipeline Diagram
+st.markdown("""
+<div class="flow-box">
+    <div class="flow-node">📡 NSE Price Feed<br><span style="color:#00F5FF;font-size:9px;">Live Data</span></div>
+    <div class="flow-arrow">➔</div>
+    <div class="flow-node">📈 Technical Agent<br><span style="color:#39FF14;font-size:9px;">RSI / Volume</span></div>
+    <div class="flow-arrow">+</div>
+    <div class="flow-node">📄 Fundamental Agent<br><span style="color:#C084FC;font-size:9px;">SEBI RAG Corpus</span></div>
+    <div class="flow-arrow">+</div>
+    <div class="flow-node">🌐 Macro Risk Agent<br><span style="color:#FFE600;font-size:9px;">Sector Regimes</span></div>
+    <div class="flow-arrow">➔</div>
+    <div class="flow-node" style="border-color:#FF007F;box-shadow:0 0 10px rgba(255,0,127,0.4);">🎯 Neural Synthesis<br><span style="color:#FF007F;font-size:9px;">Personalized</span></div>
 </div>
 """, unsafe_allow_html=True)
 
 # ==========================================
-# 1. RAG VECTOR STORE INITIALIZATION
+# 1. EXPANDED RAG VECTOR STORE (CHROMADB)
 # ==========================================
 @st.cache_resource
 def init_vector_store():
@@ -334,34 +282,39 @@ def init_vector_store():
     except Exception:
         collection = chroma_client.create_collection("regulatory_filings")
         sample_filings = [
-            "TCS Q3 SEBI Filing: Revenue growth of 4.2% YoY, EBIT margin at 25.0%. Attrition dropped to 12.3%. Cash reserve robust at ₹45,000 Cr.",
-            "INFY Corporate Disclosure: Guidance lowered by 50 bps due to macro headwinds in BFSI sector. Operating margin pressure expected in Q4.",
-            "RELIANCE SEBI Disclosure: Net profit up 11% YoY driven by retail and digital segments. Debt-to-Equity reduced to 0.38x. Capex expansion on track.",
-            "TATAMOTORS Disclosure: JLR segment free cash flow exceeded ₹1,500M. Domestic EV market share steady at 72%. Margin expansion of 140 bps."
+            "TCS Q3 SEBI Filing: Revenue growth 4.2% YoY, EBIT margin 25.0%. Order book TCV at $8.1B. Cash reserves robust at ₹45,000 Cr with zero long-term debt.",
+            "INFY Corporate Disclosure: Guidance adjusted down by 50 bps due to macro BFSI discretionary spending slowdown. Operating margin target set at 20-22%.",
+            "RELIANCE SEBI Disclosure: Net profit up 11% YoY driven by Retail EBITDA surge (+28%) and Jio ARPU rise to ₹181.7. Debt-to-Equity reduced to 0.38x.",
+            "TATAMOTORS Disclosure: JLR segment free cash flow exceeded ₹1,500M. Domestic commercial vehicle market share steady at 72%. EV penetration reached 15% of fleet.",
+            "HDFCBANK Filing: Net Interest Margin (NIM) stable at 3.4%. Gross NPA contained at 1.26%. Deposit franchise grew 19% YoY post-merger integration.",
+            "ICICIBANK Disclosure: Core operating profit grew 14.5% YoY. Return on Assets (RoA) reached 2.36%. Provision coverage ratio at 83.4%."
         ]
         metadatas = [
-            {"ticker": "TCS.NS", "source": "SEBI Q3 Corporate Filing"},
-            {"ticker": "INFY.NS", "source": "NSE Regulatory Disclosure"},
-            {"ticker": "RELIANCE.NS", "source": "SEBI Annual Financial Filing"},
-            {"ticker": "TATAMOTORS.NS", "source": "Q3 Earnings Transcript"}
+            {"ticker": "TCS.NS", "source": "SEBI Q3 Corporate Filing (TCS)"},
+            {"ticker": "INFY.NS", "source": "NSE Regulatory Disclosure (INFY)"},
+            {"ticker": "RELIANCE.NS", "source": "SEBI Annual Financial Filing (RIL)"},
+            {"ticker": "TATAMOTORS.NS", "source": "Q3 Earnings Transcript (TATAMOTORS)"},
+            {"ticker": "HDFCBANK.NS", "source": "SEBI Banking Disclosure (HDFCBANK)"},
+            {"ticker": "ICICIBANK.NS", "source": "Q3 Financial Filing (ICICIBANK)"}
         ]
         collection.add(
             documents=sample_filings,
             metadatas=metadatas,
-            ids=["doc_tcs", "doc_infy", "doc_reliance", "doc_tatamotors"]
+            ids=["doc_tcs", "doc_infy", "doc_reliance", "doc_tatamotors", "doc_hdfc", "doc_icici"]
         )
     return collection
 
 vector_store = init_vector_store()
 
 # ==========================================
-# 2. MARKET DATA & 3-DIMENSION SIGNALS
+# 2. CACHED MARKET DATA & TECHNICAL SIGNALS
 # ==========================================
-def get_market_signals(ticker: str):
+@st.cache_data(ttl=300)
+def get_market_data_and_signals(ticker: str):
     try:
         data = yf.download(ticker, period="3mo", interval="1d", progress=False)
         if data.empty or len(data) < 20:
-            return None, "Data feed returned insufficient history."
+            return None, None, "Data feed returned insufficient history."
 
         if isinstance(data.columns, pd.MultiIndex):
             data.columns = data.columns.get_level_values(0)
@@ -371,7 +324,7 @@ def get_market_signals(ticker: str):
         high = data['High'].squeeze()
         low = data['Low'].squeeze()
 
-        # Momentum (RSI)
+        # Dimension 1: 14D RSI
         delta = close.diff()
         gain = (delta.where(delta > 0, 0)).rolling(window=14).mean()
         loss = (-delta.where(delta < 0, 0)).rolling(window=14).mean()
@@ -380,35 +333,116 @@ def get_market_signals(ticker: str):
         rsi = float(rsi_series.dropna().iloc[-1])
         mom_label = "BULLISH" if rsi > 55 else ("BEARISH" if rsi < 45 else "NEUTRAL")
 
-        # Volume Anomaly
+        # Dimension 2: Volume Anomaly
         vol_avg = float(volume.rolling(20).mean().dropna().iloc[-1])
         curr_vol = float(volume.dropna().iloc[-1])
         vol_ratio = curr_vol / (vol_avg + 1e-9)
         vol_label = "VOL SPIKE" if vol_ratio > 1.4 else ("LOW VOL" if vol_ratio < 0.7 else "NORMAL")
 
-        # Volatility
+        # Dimension 3: Volatility
         high_low = (high - low) / close
         curr_volatility = float(high_low.rolling(14).mean().dropna().iloc[-1] * 100)
         vola_label = "HIGH VOLATILITY" if curr_volatility > 2.5 else "STABLE"
 
         signals = {
             "current_price": round(float(close.dropna().iloc[-1]), 2),
-            "momentum": {"rsi": round(rsi, 2), "label": mom_label, "confidence": 0.85},
-            "volume": {"ratio_to_avg": round(vol_ratio, 2), "label": vol_label, "confidence": 0.78},
-            "volatility": {"percent": round(curr_volatility, 2), "label": vola_label, "confidence": 0.82}
+            "momentum": {"rsi": round(rsi, 2), "label": mom_label},
+            "volume": {"ratio_to_avg": round(vol_ratio, 2), "label": vol_label},
+            "volatility": {"percent": round(curr_volatility, 2), "label": vola_label}
         }
-        return signals, None
+        return data, signals, None
     except Exception as e:
-        return None, str(e)
+        return None, None, str(e)
 
 # ==========================================
-# 3. MULTI-AGENT LOGIC ENGINE
+# 3. INTERACTIVE PLOTLY CANDLESTICK CHART
 # ==========================================
+def render_cyber_chart(df, ticker):
+    fig = make_subplots(
+        rows=2, cols=1, shared_xaxes=True,
+        vertical_spacing=0.04,
+        row_heights=[0.75, 0.25]
+    )
+    
+    # 20-day Moving Average
+    df['SMA20'] = df['Close'].rolling(20).mean()
+
+    # Candlestick Trace
+    fig.add_trace(go.Candlestick(
+        x=df.index,
+        open=df['Open'], high=df['High'],
+        low=df['Low'], close=df['Close'],
+        name="Price",
+        increasing_line_color='#39FF14',
+        decreasing_line_color='#FF005A'
+    ), row=1, col=1)
+
+    # SMA 20 Overlay
+    fig.add_trace(go.Scatter(
+        x=df.index, y=df['SMA20'],
+        mode='lines', name='20-Day SMA',
+        line=dict(color='#00F5FF', width=1.5)
+    ), row=1, col=1)
+
+    # Volume Bar Trace
+    colors = ['#39FF14' if c >= o else '#FF005A' for c, o in zip(df['Close'], df['Open'])]
+    fig.add_trace(go.Bar(
+        x=df.index, y=df['Volume'],
+        name="Volume",
+        marker_color=colors, opacity=0.7
+    ), row=2, col=1)
+
+    fig.update_layout(
+        template="plotly_dark",
+        paper_bgcolor='rgba(12, 12, 22, 0.85)',
+        plot_bgcolor='rgba(5, 5, 10, 0.85)',
+        margin=dict(l=10, r=10, t=10, b=10),
+        height=380,
+        showlegend=False,
+        xaxis_rangeslider_visible=False,
+        font=dict(family="JetBrains Mono", color="#CBD5E1")
+    )
+    fig.update_xaxes(gridcolor='rgba(255, 255, 255, 0.05)')
+    fig.update_yaxes(gridcolor='rgba(255, 255, 255, 0.05)')
+    return fig
+
+# ==========================================
+# 4. MULTI-AGENT REASONING & SYNTHESIS LOGIC
+# ==========================================
+def synthesize_profile_verdict(signals, risk_level, filing_source):
+    is_bullish = signals['momentum']['label'] == "BULLISH"
+    is_volatile = signals['volatility']['label'] == "HIGH VOLATILITY"
+
+    if risk_level == "Conservative":
+        if is_volatile or not is_bullish:
+            rec = "CAPITAL PRESERVATION // AVOID"
+            color = "#FF005A"
+            plan = f"Elevated daily volatility ({signals['volatility']['percent']}%) breaches conservative drawdown limits. Keep dry powder or hedge into ultra-short debt instruments."
+        else:
+            rec = "ACCUMULATE CAUTIOUSLY"
+            color = "#39FF14"
+            plan = "Low-volatility consolidation supports staggered Dollar-Cost Averaging (DCA) with a strict 2% trailing stop-loss."
+    elif risk_level == "Aggressive":
+        if is_bullish:
+            rec = "FULL SEND // HIGH CONVICTION BUY"
+            color = "#39FF14"
+            plan = f"RSI momentum ({signals['momentum']['rsi']}) and positive volume expansion signal a prime momentum continuation setup."
+        else:
+            rec = "TACTICAL LONG // DIP BUY"
+            color = "#FFE600"
+            plan = "Asset is in healthy consolidation. Optimal risk-to-reward entry triggers on retests of key volume support."
+    else:  # Moderate
+        rec = "HOLD // BALANCED ACCUMULATION"
+        color = "#00F5FF"
+        plan = f"Systematic multi-week accumulation is advised, balancing technical RSI ({signals['momentum']['rsi']}) with grounded fundamental metrics in {filing_source}."
+
+    return rec, color, plan
+
 def run_agents(ticker, signals, user_profile, degrade_data=False):
     t_start = time.time()
     
     if degrade_data:
-        filing_docs = "No direct regulatory disclosure reachable."
+        filing_docs = "No direct regulatory disclosure reachable in current session."
         filing_source = "UNAVAILABLE (Degraded Mode Active)"
     else:
         results = vector_store.query(query_texts=[ticker], n_results=1)
@@ -426,50 +460,24 @@ def run_agents(ticker, signals, user_profile, degrade_data=False):
     )
 
     fund_reasoning = f"Verified from <b style='color:#00F5FF;'>{filing_source}</b>: <i>\"{filing_docs}\"</i>"
-    macro_reasoning = "Sector sentiment holds a <b style='color:#39FF14;'>Neutral-to-Constructive</b> posture across Indian large-cap tech & energy equities."
+    macro_reasoning = "Sector sentiment reflects a <b style='color:#39FF14;'>Neutral-to-Constructive</b> posture across Indian large-cap tech & banking equities."
 
-    is_conservative = user_profile['risk'] == "Conservative"
-    is_aggressive = user_profile['risk'] == "Aggressive"
-    is_bullish = signals['momentum']['label'] == "BULLISH"
-    is_volatile = signals['volatility']['label'] == "HIGH VOLATILITY"
-
-    if is_conservative:
-        if is_volatile or not is_bullish:
-            recommendation = "CAPITAL PRESERVATION // AVOID"
-            rec_color = "#FF005A"
-            action_plan = f"Risk parameters exceed conservative thresholds due to elevated volatility ({signals['volatility']['percent']}%). Maintain cash reserves or reallocate to low-beta sovereign assets."
-        else:
-            recommendation = "ACCUMULATE CAUTIOUSLY"
-            rec_color = "#39FF14"
-            action_plan = "Controlled volatility and constructive momentum support steady DCA accumulation with tight stops."
-    elif is_aggressive:
-        if is_bullish:
-            recommendation = "FULL SEND // HIGH CONVICTION BUY"
-            rec_color = "#39FF14"
-            action_plan = f"Bullish momentum (RSI {signals['momentum']['rsi']}) and positive volume expansion signal high-probability breakout continuation."
-        else:
-            recommendation = "TACTICAL LONG // DIP BUY"
-            rec_color = "#FFE600"
-            action_plan = "Asset is in consolidation mode. Optimal risk-to-reward entry sits at support levels."
-    else:
-        recommendation = "HOLD // BALANCED ACCUMULATION"
-        rec_color = "#00F5FF"
-        action_plan = f"Balanced profile warrants a standard systematic investment position, aligning technical RSI ({signals['momentum']['rsi']}) with disclosed corporate fundamentals."
-
+    rec, color, plan = synthesize_profile_verdict(signals, user_profile['risk'], filing_source)
     latency = round(time.time() - t_start, 3)
+
     return {
         "technical": tech_reasoning,
         "fundamental": fund_reasoning,
         "sentiment": macro_reasoning,
         "citation": filing_source,
-        "recommendation": recommendation,
-        "rec_color": rec_color,
-        "action_plan": action_plan,
+        "recommendation": rec,
+        "rec_color": color,
+        "action_plan": plan,
         "latency": latency
     }
 
 # ==========================================
-# 4. SIDEBAR CONFIGURATION
+# 5. SIDEBAR SETTINGS
 # ==========================================
 with st.sidebar:
     st.markdown('<div class="sidebar-cyber-header">🎛️ // USER_MATRIX</div>', unsafe_allow_html=True)
@@ -479,13 +487,17 @@ with st.sidebar:
 
     st.markdown("---")
     st.markdown('<div class="sidebar-cyber-header">📡 // DATA_STREAM</div>', unsafe_allow_html=True)
-    ticker_input = st.selectbox("NSE_ASSET_TARGET", ["TCS.NS", "INFY.NS", "RELIANCE.NS", "TATAMOTORS.NS"])
+    ticker_input = st.selectbox("NSE_ASSET_TARGET", ["TCS.NS", "INFY.NS", "RELIANCE.NS", "TATAMOTORS.NS", "HDFCBANK.NS", "ICICIBANK.NS"])
+    
+    st.markdown("---")
+    st.markdown('<div class="sidebar-cyber-header">⚡ // DEMO_MODES</div>', unsafe_allow_html=True)
+    show_split_comparison = st.checkbox("SPLIT_PROFILE_COMPARISON", value=True)
     simulate_degraded = st.checkbox("SIMULATE_FEED_DEGRADATION")
 
 # Main Action Button
 if st.button("⚡ EXECUTE NEURAL SYNTHESIS"):
-    with st.spinner("Dispatching parallel specialist agents..."):
-        signals, err = get_market_signals(ticker_input)
+    with st.spinner("Dispatching parallel specialist agents and rendering analytics..."):
+        df, signals, err = get_market_data_and_signals(ticker_input)
         
         if err:
             st.error(f"Data Stream Failure: {err}")
@@ -494,7 +506,6 @@ if st.button("⚡ EXECUTE NEURAL SYNTHESIS"):
 
             # 1. Metric Cards Grid
             col1, col2, col3, col4 = st.columns(4)
-            
             badge_class = "badge-bull" if signals['momentum']['label'] == "BULLISH" else ("badge-bear" if signals['momentum']['label'] == "BEARISH" else "badge-mid")
             vol_badge = "badge-bear" if "HIGH" in signals['volatility']['label'] else "badge-bull"
 
@@ -534,24 +545,54 @@ if st.button("⚡ EXECUTE NEURAL SYNTHESIS"):
                 </div>
                 """, unsafe_allow_html=True)
 
-            # 2. Neon Verdict Banner
-            st.markdown(f"""
-            <div class="verdict-container">
-                <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: #00F5FF; text-shadow: 0 0 8px rgba(0,245,255,0.6);">
-                    SYNTHESIZED INTELLIGENCE // [{profile_risk.upper()} PROFILE]
-                </div>
-                <div style="font-size: 26px; font-weight: 800; color: {agent_outputs['rec_color']}; margin: 8px 0 12px 0; text-shadow: 0 0 15px {agent_outputs['rec_color']}66;">
-                    {agent_outputs['recommendation']}
-                </div>
-                <div style="color: #F1F5F9; font-size: 14px; line-height: 1.6;">
-                    {agent_outputs['action_plan']}
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
+            # 2. Interactive Plotly Candlestick Chart
+            st.markdown("### 📊 LIVE ASSET CANDLESTICK & VOLUME OSCILLATOR")
+            chart_fig = render_cyber_chart(df, ticker_input)
+            st.plotly_chart(chart_fig, use_container_width=True)
 
-            # 3. Agent Reasoning Traces
+            # 3. Personalized Intelligence Verdict
+            if show_split_comparison:
+                st.markdown("### 🎯 SIDE-BY-SIDE RISK CALIBRATION COMPARISON")
+                c_col1, c_col2 = st.columns(2)
+                
+                # Conservative Output
+                c_rec, c_col, c_plan = synthesize_profile_verdict(signals, "Conservative", agent_outputs["citation"])
+                with c_col1:
+                    st.markdown(f"""
+                    <div class="verdict-container" style="border-color:#38BDF8;box-shadow:0 0 20px rgba(56,189,248,0.25);">
+                        <div style="font-family:'JetBrains Mono';font-size:11px;font-weight:700;color:#38BDF8;">PROFILE: CONSERVATIVE</div>
+                        <div style="font-size:22px;font-weight:800;color:{c_col};margin:6px 0;">{c_rec}</div>
+                        <div style="color:#F1F5F9;font-size:13px;line-height:1.5;">{c_plan}</div>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+                # Aggressive Output
+                a_rec, a_col, a_plan = synthesize_profile_verdict(signals, "Aggressive", agent_outputs["citation"])
+                with c_col2:
+                    st.markdown(f"""
+                    <div class="verdict-container" style="border-color:#FF007F;box-shadow:0 0 20px rgba(255,0,127,0.25);">
+                        <div style="font-family:'JetBrains Mono';font-size:11px;font-weight:700;color:#FF007F;">PROFILE: AGGRESSIVE</div>
+                        <div style="font-size:22px;font-weight:800;color:{a_col};margin:6px 0;">{a_rec}</div>
+                        <div style="color:#F1F5F9;font-size:13px;line-height:1.5;">{a_plan}</div>
+                    </div>
+                    """, unsafe_allow_html=True)
+            else:
+                st.markdown(f"""
+                <div class="verdict-container">
+                    <div style="font-family: 'JetBrains Mono'; font-size: 11px; font-weight: 700; color: #00F5FF;">
+                        SYNTHESIZED INTELLIGENCE // [{profile_risk.upper()} PROFILE]
+                    </div>
+                    <div style="font-size: 26px; font-weight: 800; color: {agent_outputs['rec_color']}; margin: 8px 0 12px 0;">
+                        {agent_outputs['recommendation']}
+                    </div>
+                    <div style="color: #F1F5F9; font-size: 14px; line-height: 1.6;">
+                        {agent_outputs['action_plan']}
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+
+            # 4. Agent Reasoning Traces
             st.markdown("### 🕵️ PARALLEL AGENT REASONING TRACES")
-            
             with st.expander("📈 TECHNICAL ANALYSIS AGENT LOG", expanded=True):
                 st.markdown(f'<div class="agent-log">{agent_outputs["technical"]}</div>', unsafe_allow_html=True)
                 
@@ -562,7 +603,7 @@ if st.button("⚡ EXECUTE NEURAL SYNTHESIS"):
             with st.expander("🌐 MACRO SENTIMENT AGENT LOG", expanded=True):
                 st.markdown(f'<div class="agent-log">{agent_outputs["sentiment"]}</div>', unsafe_allow_html=True)
 
-            # 4. Telemetry Metrics
+            # 5. Telemetry Metrics
             st.markdown("---")
             st.markdown("### 📊 SESSION TELEMETRY METRICS")
             t_col1, t_col2, t_col3 = st.columns(3)
