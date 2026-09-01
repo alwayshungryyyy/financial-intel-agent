@@ -1,4 +1,3 @@
-
 import streamlit as st
 import yfinance as yf
 import pandas as pd
@@ -7,7 +6,6 @@ import chromadb
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import time
-from datetime import datetime
 
 # ==========================================
 # PAGE CONFIGURATION & METADATA
@@ -26,18 +24,16 @@ st.markdown("""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
-    /* Global Typography */
     html, body, [class*="css"] {
         font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     }
     
-    /* Institutional Dark Workspace Canvas */
     .stApp {
         background-color: #0B0E14;
         color: #E6EDF3;
     }
 
-    /* Top Navigation / Terminal Header */
+    /* Terminal Header */
     .terminal-nav {
         background: #161B22;
         border-bottom: 1px solid #30363D;
@@ -46,13 +42,13 @@ st.markdown("""
         display: flex;
         justify-content: space-between;
         align-items: center;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
     }
     .terminal-title {
         font-family: 'JetBrains Mono', monospace;
         font-size: 18px;
         font-weight: 700;
         color: #58A6FF;
-        letter-spacing: -0.02em;
         display: flex;
         align-items: center;
         gap: 10px;
@@ -76,23 +72,25 @@ st.markdown("""
         text-transform: uppercase;
         letter-spacing: 0.08em;
         color: #8B949E;
-        margin-top: 18px;
-        margin-bottom: 12px;
+        margin-top: 22px;
+        margin-bottom: 14px;
         border-left: 3px solid #58A6FF;
-        padding-left: 8px;
+        padding-left: 10px;
     }
 
-    /* Metric Cards */
+    /* Metric Cards with Aesthetic Shadows */
     .metric-container {
         background: #161B22;
         border: 1px solid #30363D;
         border-radius: 8px;
         padding: 16px;
-        transition: border-color 0.2s ease, transform 0.2s ease;
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+        transition: all 0.25s ease-in-out;
     }
     .metric-container:hover {
         border-color: #58A6FF;
-        transform: translateY(-2px);
+        transform: translateY(-3px);
+        box-shadow: 0 10px 24px rgba(88, 166, 255, 0.15);
     }
     .metric-title {
         font-family: 'JetBrains Mono', monospace;
@@ -121,46 +119,70 @@ st.markdown("""
     .tag-bear { background: rgba(218, 54, 51, 0.2); color: #F85149; border: 1px solid rgba(248, 81, 73, 0.4); }
     .tag-neutral { background: rgba(139, 148, 158, 0.2); color: #C9D1D9; border: 1px solid rgba(139, 148, 158, 0.4); }
 
-    /* Recommendation & Synthesis Banner */
+    /* Verdict Card with Rigid Layout & Fixed Text Sizes */
     .verdict-card {
         background: #161B22;
         border: 1px solid #58A6FF;
-        border-radius: 8px;
+        border-radius: 10px;
         padding: 22px;
-        margin: 16px 0 24px 0;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        margin: 10px 0;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .verdict-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.6);
     }
     .verdict-header {
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 12px;
-        font-weight: 700;
-        color: #58A6FF;
-        text-transform: uppercase;
-        letter-spacing: 0.06em;
-        margin-bottom: 8px;
+        font-family: 'JetBrains Mono', monospace !important;
+        font-size: 11px !important;
+        font-weight: 700 !important;
+        color: #58A6FF !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.06em !important;
+        margin-bottom: 8px !important;
+    }
+    .verdict-title {
+        font-size: 18px !important;
+        font-weight: 700 !important;
+        margin: 6px 0 10px 0 !important;
+        line-height: 1.3 !important;
+    }
+    .verdict-body {
+        color: #C9D1D9 !important;
+        font-size: 13.5px !important;
+        line-height: 1.6 !important;
+        font-weight: 400 !important;
+        min-height: 85px;
     }
 
-    /* Structured Agent Cards (Proper spacing & bold titles) */
+    /* Article Boxes with Shadow */
     .agent-box {
         background: #161B22;
         border: 1px solid #30363D;
-        border-radius: 8px;
-        padding: 18px 22px;
-        margin-bottom: 18px;
-        line-height: 1.65;
+        border-radius: 10px;
+        padding: 20px 24px;
+        margin-bottom: 20px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .agent-box:hover {
+        border-color: #58A6FF;
+        box-shadow: 0 10px 25px rgba(88, 166, 255, 0.12);
     }
     .agent-header-title {
-        font-size: 15px;
-        font-weight: 700;
-        color: #F0F6FC;
-        margin-bottom: 8px;
+        font-size: 15px !important;
+        font-weight: 700 !important;
+        color: #F0F6FC !important;
+        margin-bottom: 10px !important;
         display: flex;
         align-items: center;
         gap: 8px;
     }
     .agent-content-text {
-        font-size: 13.5px;
-        color: #C9D1D9;
+        font-size: 13.5px !important;
+        color: #C9D1D9 !important;
+        line-height: 1.65 !important;
     }
     .citation-badge {
         display: inline-block;
@@ -172,7 +194,7 @@ st.markdown("""
         font-size: 11px;
         font-weight: 600;
         color: #58A6FF;
-        margin-top: 10px;
+        margin-top: 12px;
     }
 
     /* Sidebar Workstation Adjustments */
@@ -201,11 +223,13 @@ st.markdown("""
         border-radius: 6px;
         padding: 10px 20px;
         width: 100%;
-        transition: background 0.2s ease;
+        box-shadow: 0 4px 12px rgba(35, 134, 54, 0.3);
+        transition: all 0.2s ease;
     }
     div.stButton > button:hover {
         background: #2EA043;
         border-color: #58A6FF;
+        box-shadow: 0 6px 16px rgba(35, 134, 54, 0.45);
     }
 
     /* Telemetry KPI Metrics */
@@ -214,6 +238,7 @@ st.markdown("""
         border: 1px solid #30363D;
         border-radius: 6px;
         padding: 12px 16px;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
     }
     [data-testid="stMetricLabel"] p {
         font-family: 'JetBrains Mono', monospace !important;
@@ -340,11 +365,9 @@ def render_professional_chart(df, ticker):
         row_heights=[0.75, 0.25]
     )
 
-    # Technical Overlays
     df['SMA20'] = df['Close'].rolling(20).mean()
     df['SMA50'] = df['Close'].rolling(50).mean()
 
-    # Candlestick Series
     fig.add_trace(go.Candlestick(
         x=df.index,
         open=df['Open'], high=df['High'],
@@ -354,7 +377,6 @@ def render_professional_chart(df, ticker):
         decreasing_line_color='#EF5350'
     ), row=1, col=1)
 
-    # 20 SMA & 50 SMA Traces
     fig.add_trace(go.Scatter(
         x=df.index, y=df['SMA20'],
         mode='lines', name='SMA 20',
@@ -367,7 +389,6 @@ def render_professional_chart(df, ticker):
         line=dict(color='#E3B341', width=1.5)
     ), row=1, col=1)
 
-    # Volume Bars
     vol_colors = ['#26A69A' if c >= o else '#EF5350' for c, o in zip(df['Close'], df['Open'])]
     fig.add_trace(go.Bar(
         x=df.index, y=df['Volume'],
@@ -375,20 +396,16 @@ def render_professional_chart(df, ticker):
         marker_color=vol_colors, opacity=0.75
     ), row=2, col=1)
 
-    # Chart Styling
     fig.update_layout(
         template="plotly_dark",
         paper_bgcolor='#161B22',
         plot_bgcolor='#0D1117',
         margin=dict(l=8, r=8, t=8, b=8),
-        height=400,
+        height=380,
         showlegend=True,
         legend=dict(
-            orientation="h",
-            yanchor="bottom",
-            y=1.02,
-            xanchor="right",
-            x=1,
+            orientation="h", yanchor="bottom", y=1.02,
+            xanchor="right", x=1,
             font=dict(family="JetBrains Mono", size=10, color="#8B949E")
         ),
         xaxis_rangeslider_visible=False,
@@ -399,7 +416,63 @@ def render_professional_chart(df, ticker):
     return fig
 
 # ==========================================
-# 4. MULTI-AGENT REASONING PIPELINE
+# 4. PIE CHART GENERATORS
+# ==========================================
+def render_signal_pie():
+    labels = ['Momentum (RSI)', 'Volume Anomaly', 'ATR Volatility']
+    values = [40, 35, 25]  # Weighting percentages
+    colors = ['#58A6FF', '#3FB950', '#E3B341']
+
+    fig = go.Figure(data=[go.Pie(
+        labels=labels, values=values, hole=.45,
+        marker=dict(colors=colors, line=dict(color='#161B22', width=2)),
+        textinfo='label+percent',
+        textfont=dict(family="JetBrains Mono", size=11, color="#F0F6FC")
+    )])
+
+    fig.update_layout(
+        template="plotly_dark",
+        paper_bgcolor='#161B22',
+        plot_bgcolor='#161B22',
+        margin=dict(l=10, r=10, t=10, b=10),
+        height=240,
+        showlegend=False
+    )
+    return fig
+
+def render_portfolio_pie(risk_profile):
+    if risk_profile == "Conservative":
+        labels = ['Sovereign Debt / Cash', 'Large-Cap Equities', 'Hedging / Options']
+        values = [60, 30, 10]
+        colors = ['#58A6FF', '#3FB950', '#8B949E']
+    elif risk_profile == "Aggressive":
+        labels = ['Growth Equities', 'Momentum Options', 'Cash Reserve']
+        values = [70, 20, 10]
+        colors = ['#A371F7', '#3FB950', '#E3B341']
+    else:  # Moderate
+        labels = ['Core Equities', 'Fixed Income', 'Tactical Cash']
+        values = [50, 35, 15]
+        colors = ['#3FB950', '#58A6FF', '#E3B341']
+
+    fig = go.Figure(data=[go.Pie(
+        labels=labels, values=values, hole=.45,
+        marker=dict(colors=colors, line=dict(color='#161B22', width=2)),
+        textinfo='label+percent',
+        textfont=dict(family="JetBrains Mono", size=11, color="#F0F6FC")
+    )])
+
+    fig.update_layout(
+        template="plotly_dark",
+        paper_bgcolor='#161B22',
+        plot_bgcolor='#161B22',
+        margin=dict(l=10, r=10, t=10, b=10),
+        height=240,
+        showlegend=False
+    )
+    return fig
+
+# ==========================================
+# 5. MULTI-AGENT REASONING PIPELINE
 # ==========================================
 def synthesize_profile_verdict(signals, risk_level, filing_source):
     is_bullish = signals['momentum']['status'] == "BULLISH"
@@ -423,7 +496,7 @@ def synthesize_profile_verdict(signals, risk_level, filing_source):
             rec = "TACTICAL ACCUMULATION ON PULLBACKS"
             color = "#E3B341"
             plan = "Asset is in a secondary consolidation range. Favorable risk-to-reward ratio for swing long entries upon confirmed support retests."
-    else:  # Moderate
+    else:
         rec = "HOLD / SYSTEMATIC EXPOSURE"
         color = "#58A6FF"
         plan = f"Balanced profile warrants a standard systematic investment position, aligning technical momentum ({signals['momentum']['rsi']}) with balance-sheet metrics verified in {filing_source}."
@@ -433,7 +506,6 @@ def synthesize_profile_verdict(signals, risk_level, filing_source):
 def run_agents(ticker, signals, user_profile, degrade_data=False):
     t_start = time.time()
 
-    # RAG Retrieval Layer
     if degrade_data:
         filing_docs = "No direct regulatory disclosure reachable in active session."
         filing_source = "UNAVAILABLE [System Operating in Degraded State]"
@@ -446,20 +518,17 @@ def run_agents(ticker, signals, user_profile, degrade_data=False):
             filing_docs = "Standard compliance filing verified."
             filing_source = "SEBI Compliance General Corpus"
 
-    # Agent 1: Quantitative Technical Analyst
     tech_reasoning = (
-        f"The 14-day Relative Strength Index (RSI) registers at **{signals['momentum']['rsi']}** ({signals['momentum']['status']}), indicating structured momentum. "
-        f"Volume turnover is currently running at **{signals['volume']['ratio']}x** relative to the 20-day historical mean ({signals['volume']['status']}). "
-        f"Price action is **{signals['trend']['status']}** with the 20-day SMA situated at ₹{signals['trend']['sma20']:,}."
+        f"The 14-day Relative Strength Index (RSI) registers at <b>{signals['momentum']['rsi']}</b> ({signals['momentum']['status']}), indicating structured momentum. "
+        f"Volume turnover is currently running at <b>{signals['volume']['ratio']}x</b> relative to the 20-day historical mean ({signals['volume']['status']}). "
+        f"Price action is <b>{signals['trend']['status']}</b> with the 20-day SMA situated at ₹{signals['trend']['sma20']:,}."
     )
 
-    # Agent 2: Fundamental & Compliance RAG Agent
-    fund_reasoning = f"Regulatory filings verified from **{filing_source}**: \"{filing_docs}\""
+    fund_reasoning = f"Regulatory filings verified from <b>{filing_source}</b>: \"{filing_docs}\""
 
-    # Agent 3: Macro Risk & Market Sentiment Agent
     macro_reasoning = (
         "Domestic liquidity flows (DII) remain supportive across Indian equities. "
-        "Sectoral volatility index displays a **Neutral-to-Constructive** regime with contained currency volatility and favorable macro headroom."
+        "Sectoral volatility index displays a <b>Neutral-to-Constructive</b> regime with contained currency volatility and favorable macro headroom."
     )
 
     rec, color, plan = synthesize_profile_verdict(signals, user_profile['risk'], filing_source)
@@ -477,7 +546,7 @@ def run_agents(ticker, signals, user_profile, degrade_data=False):
     }
 
 # ==========================================
-# 5. SIDEBAR: WORKSTATION CONTROLS
+# 6. SIDEBAR CONTROLS
 # ==========================================
 with st.sidebar:
     st.markdown('<div class="pro-header">USER PROFILING</div>', unsafe_allow_html=True)
@@ -552,7 +621,19 @@ if st.button("RUN MULTI-AGENT RESEARCH"):
             chart = render_professional_chart(df, ticker_input)
             st.plotly_chart(chart, use_container_width=True)
 
-            # 3. Personalized Intelligence & Risk Calibration
+            # 3. Pie Chart Analytics Row
+            st.markdown('<div class="pro-header">ANALYTICAL BREAKDOWN & PORTFOLIO ALLOCATION</div>', unsafe_allow_html=True)
+            pie_col1, pie_col2 = st.columns(2)
+
+            with pie_col1:
+                st.markdown('<div style="font-family:\'JetBrains Mono\';font-size:11px;color:#8B949E;margin-bottom:6px;">QUANT SIGNAL WEIGHT ALLOCATION</div>', unsafe_allow_html=True)
+                st.plotly_chart(render_signal_pie(), use_container_width=True)
+
+            with pie_col2:
+                st.markdown(f'<div style="font-family:\'JetBrains Mono\';font-size:11px;color:#8B949E;margin-bottom:6px;">TARGET PORTFOLIO DISTRIBUTION [{profile_risk.upper()}]</div>', unsafe_allow_html=True)
+                st.plotly_chart(render_portfolio_pie(profile_risk), use_container_width=True)
+
+            # 4. Personalized Intelligence & Risk Calibration
             if show_split_view:
                 st.markdown('<div class="pro-header">PERSONALIZED MULTI-PROFILE RISK ALLOCATION</div>', unsafe_allow_html=True)
                 p_col1, p_col2 = st.columns(2)
@@ -562,8 +643,8 @@ if st.button("RUN MULTI-AGENT RESEARCH"):
                     st.markdown(f"""
                     <div class="verdict-card" style="border-color: #58A6FF;">
                         <div class="verdict-header">INVESTOR PROFILE: CONSERVATIVE</div>
-                        <div style="font-size: 20px; font-weight: 700; color: {c_col}; margin: 6px 0 10px 0;">{c_rec}</div>
-                        <div style="color: #C9D1D9; font-size: 13.5px; line-height: 1.6;">{c_plan}</div>
+                        <div class="verdict-title" style="color: {c_col};">{c_rec}</div>
+                        <div class="verdict-body">{c_plan}</div>
                     </div>
                     """, unsafe_allow_html=True)
 
@@ -572,20 +653,20 @@ if st.button("RUN MULTI-AGENT RESEARCH"):
                     st.markdown(f"""
                     <div class="verdict-card" style="border-color: #A371F7;">
                         <div class="verdict-header" style="color: #A371F7;">INVESTOR PROFILE: AGGRESSIVE</div>
-                        <div style="font-size: 20px; font-weight: 700; color: {a_col}; margin: 6px 0 10px 0;">{a_rec}</div>
-                        <div style="color: #C9D1D9; font-size: 13.5px; line-height: 1.6;">{a_plan}</div>
+                        <div class="verdict-title" style="color: {a_col};">{a_rec}</div>
+                        <div class="verdict-body">{a_plan}</div>
                     </div>
                     """, unsafe_allow_html=True)
             else:
                 st.markdown(f"""
                 <div class="verdict-card">
                     <div class="verdict-header">SYNTHESIZED INTELLIGENCE [{profile_risk.upper()} PROFILE]</div>
-                    <div style="font-size: 22px; font-weight: 700; color: {agent_outputs['rec_color']}; margin: 6px 0 10px 0;">{agent_outputs['recommendation']}</div>
-                    <div style="color: #C9D1D9; font-size: 14px; line-height: 1.6;">{agent_outputs['action_plan']}</div>
+                    <div class="verdict-title" style="color: {agent_outputs['rec_color']};">{agent_outputs['recommendation']}</div>
+                    <div class="verdict-body">{agent_outputs['action_plan']}</div>
                 </div>
                 """, unsafe_allow_html=True)
 
-            # 4. Specialized Multi-Agent Reasoning Logs
+            # 5. Specialized Multi-Agent Reasoning Logs with Shadows & Bold Titles
             st.markdown('<div class="pro-header">INDEPENDENT AGENT REASONING TRACES</div>', unsafe_allow_html=True)
 
             # Article 1: Technical Agent
@@ -605,7 +686,7 @@ if st.button("RUN MULTI-AGENT RESEARCH"):
             </div>
             """, unsafe_allow_html=True)
 
-            # Article 3: Macro & Sentiment Agent
+            # Article 3: Macro Agent
             st.markdown(f"""
             <div class="agent-box">
                 <div class="agent-header-title">🌐 <b>Macro Regime & Liquidity Risk Agent</b></div>
@@ -613,7 +694,7 @@ if st.button("RUN MULTI-AGENT RESEARCH"):
             </div>
             """, unsafe_allow_html=True)
 
-            # 5. Session Telemetry
+            # 6. Session Telemetry
             st.markdown('<div class="pro-header">SESSION TELEMETRY & SYSTEM PERFORMANCE</div>', unsafe_allow_html=True)
             t_col1, t_col2, t_col3, t_col4 = st.columns(4)
             with t_col1:
