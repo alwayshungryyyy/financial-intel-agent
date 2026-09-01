@@ -18,77 +18,68 @@ st.set_page_config(
 )
 
 # ==========================================
-# PERMANENT DARK THEME & SPIDER-VERSE GLOW CSS
+# INSTITUTIONAL CYBER-DARK CSS THEME
 # ==========================================
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
     html, body, [class*="css"] {
         font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     }
 
-    /* Hard Lock Dark Canvas */
+    /* Hard-Lock Global Dark Base */
     html, body, [data-testid="stAppViewContainer"], [data-testid="stHeader"] {
-        background-color: #06070B !important;
-        color: #E6EDF3 !important;
+        background-color: #05070B !important;
+        color: #E2E8F0 !important;
     }
 
-    /* Force Dark Sidebar */
-    [data-testid="stSidebar"], [data-testid="stSidebar"] > div:first-child {
-        background-color: #0E1118 !important;
-        color: #E6EDF3 !important;
-        border-right: 1px solid rgba(226, 54, 54, 0.2) !important;
-    }
-
-    /* Force Dark Dropdowns and Form Controls */
-    div[data-baseweb="select"] > div, 
-    div[data-baseweb="input"] > div,
-    div[data-baseweb="popover"],
-    ul[role="listbox"] {
-        background-color: #12161F !important;
-        color: #FFFFFF !important;
-        border-color: rgba(255, 255, 255, 0.15) !important;
-    }
-
-    /* Dropdown Option Items */
-    li[role="option"] {
-        background-color: #12161F !important;
-        color: #E6EDF3 !important;
-    }
-    li[role="option"]:hover {
-        background-color: #1F2937 !important;
-    }
-    
-    /* Background Canvas with Spider-Verse Geometric Web Backlight */
+    /* Ambient Layered Mesh & Micro-Grid Background */
     .stApp {
-        background-color: #06070B !important;
+        background-color: #05070B !important;
         background-image: 
-            radial-gradient(at 0% 0%, rgba(226, 54, 54, 0.12) 0px, transparent 45%),
-            radial-gradient(at 100% 100%, rgba(0, 119, 255, 0.12) 0px, transparent 45%),
-            radial-gradient(at 50% 50%, rgba(226, 54, 54, 0.04) 0px, transparent 65%),
-            repeating-radial-gradient(circle at 50% 50%, transparent 0, transparent 40px, rgba(255, 255, 255, 0.015) 41px, transparent 42px) !important;
+            /* Top Left Neon Cyan/Blue Flare */
+            radial-gradient(circle at 10% 8%, rgba(0, 212, 255, 0.12) 0px, transparent 38%),
+            /* Bottom Right Spider Crimson Flare */
+            radial-gradient(circle at 90% 90%, rgba(226, 54, 54, 0.12) 0px, transparent 42%),
+            /* Central Deep Violet Ambience */
+            radial-gradient(circle at 50% 50%, rgba(124, 58, 237, 0.05) 0px, transparent 60%),
+            /* Precision Trading Grid Lines */
+            linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px) !important;
+        background-size: 100% 100%, 100% 100%, 100% 100%, 36px 36px, 36px 36px !important;
         background-attachment: fixed !important;
-        color: #E6EDF3 !important;
+        color: #E2E8F0 !important;
     }
 
-    /* Terminal Header */
+    /* Force Dark Sidebar with Glass Effect */
+    [data-testid="stSidebar"], [data-testid="stSidebar"] > div:first-child {
+        background-color: rgba(9, 12, 18, 0.95) !important;
+        backdrop-filter: blur(16px) !important;
+        color: #E2E8F0 !important;
+        border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+    }
+
+    /* Terminal Navigation Bar */
     .terminal-nav {
-        background: rgba(18, 22, 31, 0.85);
-        backdrop-filter: blur(12px);
-        border-bottom: 1px solid rgba(226, 54, 54, 0.3);
-        padding: 14px 24px;
+        background: rgba(13, 17, 26, 0.8) !important;
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(88, 166, 255, 0.2);
+        padding: 16px 28px;
         margin: -1rem -1rem 1.5rem -1rem;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.05);
     }
     .terminal-title {
         font-family: 'JetBrains Mono', monospace;
         font-size: 18px;
-        font-weight: 700;
-        color: #58A6FF;
+        font-weight: 800;
+        letter-spacing: -0.01em;
+        background: linear-gradient(90deg, #58A6FF 0%, #00F5FF 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
         display: flex;
         align-items: center;
         gap: 10px;
@@ -96,56 +87,58 @@ st.markdown("""
     .terminal-status {
         font-family: 'JetBrains Mono', monospace;
         font-size: 11px;
-        font-weight: 600;
-        padding: 4px 10px;
-        border-radius: 4px;
-        background: rgba(35, 134, 54, 0.2);
-        color: #3FB950;
-        border: 1px solid rgba(46, 160, 67, 0.4);
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        padding: 5px 12px;
+        border-radius: 9999px;
+        background: rgba(35, 134, 54, 0.15);
+        color: #39FF14;
+        border: 1px solid rgba(57, 255, 20, 0.35);
+        box-shadow: 0 0 12px rgba(57, 255, 20, 0.2);
     }
 
     /* Section Headers */
     .pro-header {
         font-family: 'Inter', sans-serif;
-        font-size: 14px;
-        font-weight: 700;
+        font-size: 13px;
+        font-weight: 800;
         text-transform: uppercase;
-        letter-spacing: 0.08em;
-        color: #8B949E;
-        margin-top: 22px;
+        letter-spacing: 0.1em;
+        color: #94A3B8;
+        margin-top: 24px;
         margin-bottom: 14px;
         border-left: 3px solid #E23636;
         padding-left: 10px;
     }
 
-    /* Metric Cards with Inset Web Shadow */
+    /* Inset Metric Cards */
     .metric-container {
-        background: rgba(18, 22, 31, 0.85);
-        backdrop-filter: blur(8px);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 10px;
+        background: rgba(13, 17, 26, 0.75);
+        backdrop-filter: blur(14px);
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        border-radius: 12px;
         padding: 18px;
-        box-shadow: inset 0 3px 10px rgba(0, 0, 0, 0.75), 0 4px 12px rgba(0, 0, 0, 0.3);
-        transition: all 0.25s ease-in-out;
+        box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.8), 0 8px 24px rgba(0, 0, 0, 0.4);
+        transition: all 0.25s ease;
     }
     .metric-container:hover {
-        border-color: #E23636;
-        box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.6), 0 6px 18px rgba(226, 54, 54, 0.25);
+        border-color: rgba(88, 166, 255, 0.5);
+        box-shadow: inset 0 1px 6px rgba(0, 0, 0, 0.6), 0 10px 30px rgba(0, 212, 255, 0.15);
         transform: translateY(-2px);
     }
     .metric-title {
         font-family: 'JetBrains Mono', monospace;
-        font-size: 11px;
-        font-weight: 600;
+        font-size: 10.5px;
+        font-weight: 700;
         text-transform: uppercase;
-        color: #8B949E;
-        letter-spacing: 0.05em;
+        color: #64748B;
+        letter-spacing: 0.08em;
     }
     .metric-num {
         font-family: 'JetBrains Mono', monospace;
-        font-size: 24px;
-        font-weight: 700;
-        color: #F0F6FC;
+        font-size: 25px;
+        font-weight: 800;
+        color: #F8FAFC;
         margin: 6px 0;
     }
     .metric-tag {
@@ -153,89 +146,89 @@ st.markdown("""
         font-family: 'JetBrains Mono', monospace;
         font-size: 10px;
         font-weight: 700;
-        padding: 2px 8px;
-        border-radius: 4px;
+        padding: 3px 9px;
+        border-radius: 6px;
     }
-    .tag-bull { background: rgba(35, 134, 54, 0.2); color: #3FB950; border: 1px solid rgba(46, 160, 67, 0.4); }
-    .tag-bear { background: rgba(226, 54, 54, 0.2); color: #FF6B6B; border: 1px solid rgba(226, 54, 54, 0.4); }
-    .tag-neutral { background: rgba(139, 148, 158, 0.2); color: #C9D1D9; border: 1px solid rgba(139, 148, 158, 0.4); }
+    .tag-bull { background: rgba(35, 134, 54, 0.15); color: #39FF14; border: 1px solid rgba(57, 255, 20, 0.4); }
+    .tag-bear { background: rgba(226, 54, 54, 0.15); color: #FF4D4D; border: 1px solid rgba(226, 54, 54, 0.4); }
+    .tag-neutral { background: rgba(148, 163, 184, 0.12); color: #CBD5E1; border: 1px solid rgba(148, 163, 184, 0.3); }
 
-    /* Glowing Container for Pie Charts */
+    /* Pie Charts Glass Glowing Box */
     .pie-glow-box {
-        background: rgba(22, 27, 34, 0.75);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(88, 166, 255, 0.3);
-        border-radius: 12px;
+        background: rgba(13, 17, 26, 0.7);
+        backdrop-filter: blur(16px);
+        border: 1px solid rgba(88, 166, 255, 0.2);
+        border-radius: 14px;
         padding: 16px;
-        box-shadow: 0 0 20px rgba(0, 119, 255, 0.12), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
         transition: all 0.3s ease;
     }
     .pie-glow-box:hover {
-        border-color: #58A6FF;
-        box-shadow: 0 0 28px rgba(0, 119, 255, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+        border-color: rgba(88, 166, 255, 0.6);
+        box-shadow: 0 0 25px rgba(88, 166, 255, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
         transform: translateY(-2px);
     }
 
     /* Verdict Card with Rigid Layout & Fixed Text Sizes */
     .verdict-card {
-        background: linear-gradient(145deg, rgba(22, 27, 34, 0.9) 0%, rgba(13, 17, 23, 0.9) 100%);
-        backdrop-filter: blur(8px);
-        border: 1px solid #58A6FF;
-        border-radius: 10px;
+        background: linear-gradient(145deg, rgba(17, 23, 34, 0.85) 0%, rgba(9, 12, 18, 0.9) 100%);
+        backdrop-filter: blur(14px);
+        border: 1px solid rgba(88, 166, 255, 0.4);
+        border-radius: 12px;
         padding: 22px;
         margin: 10px 0;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.06);
         transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
     .verdict-card:hover {
         transform: translateY(-2px);
-        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.65), 0 0 15px rgba(88, 166, 255, 0.15);
+        box-shadow: 0 16px 36px rgba(0, 0, 0, 0.75), 0 0 18px rgba(88, 166, 255, 0.2);
     }
     .verdict-header {
         font-family: 'JetBrains Mono', monospace !important;
         font-size: 11px !important;
-        font-weight: 700 !important;
+        font-weight: 800 !important;
         color: #58A6FF !important;
         text-transform: uppercase !important;
-        letter-spacing: 0.06em !important;
+        letter-spacing: 0.08em !important;
         margin-bottom: 8px !important;
     }
     .verdict-title {
         font-size: 18px !important;
-        font-weight: 700 !important;
+        font-weight: 800 !important;
         margin: 6px 0 10px 0 !important;
         line-height: 1.3 !important;
     }
     .verdict-body {
-        color: #C9D1D9 !important;
+        color: #CBD5E1 !important;
         font-size: 13.5px !important;
         line-height: 1.6 !important;
         font-weight: 400 !important;
         min-height: 85px;
     }
 
-    /* Article Boxes with Spider-Web Textured Glassmorphism */
+    /* Agent Article Boxes with Glassmorphic Texture */
     .agent-box {
         background: 
-            radial-gradient(circle at 95% 10%, rgba(226, 54, 54, 0.07) 0%, transparent 40%),
-            linear-gradient(135deg, rgba(22, 27, 34, 0.9) 0%, rgba(15, 19, 25, 0.9) 100%);
-        backdrop-filter: blur(8px);
+            radial-gradient(circle at 95% 10%, rgba(226, 54, 54, 0.08) 0%, transparent 45%),
+            linear-gradient(135deg, rgba(17, 23, 34, 0.85) 0%, rgba(9, 12, 18, 0.85) 100%);
+        backdrop-filter: blur(14px);
         border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 10px;
-        padding: 20px 24px;
+        border-radius: 12px;
+        padding: 22px 26px;
         margin-bottom: 20px;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.03);
-        transition: border-color 0.2s ease, box-shadow 0.2s ease;
-        position: relative;
+        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+        transition: all 0.25s ease;
     }
     .agent-box:hover {
-        border-color: #E23636;
-        box-shadow: 0 12px 28px rgba(226, 54, 54, 0.15);
+        border-color: rgba(226, 54, 54, 0.5);
+        box-shadow: 0 14px 34px rgba(0, 0, 0, 0.65), 0 0 20px rgba(226, 54, 54, 0.15);
+        transform: translateY(-1px);
     }
     .agent-header-title {
         font-size: 15px !important;
         font-weight: 700 !important;
-        color: #F0F6FC !important;
+        color: #F8FAFC !important;
         margin-bottom: 10px !important;
         display: flex;
         align-items: center;
@@ -243,73 +236,93 @@ st.markdown("""
     }
     .agent-content-text {
         font-size: 13.5px !important;
-        color: #C9D1D9 !important;
+        color: #CBD5E1 !important;
         line-height: 1.65 !important;
     }
     .citation-badge {
         display: inline-block;
-        background: #090D12;
+        background: rgba(5, 7, 11, 0.8);
         border: 1px solid rgba(88, 166, 255, 0.3);
-        border-radius: 4px;
-        padding: 4px 10px;
+        border-radius: 6px;
+        padding: 5px 12px;
         font-family: 'JetBrains Mono', monospace;
         font-size: 11px;
         font-weight: 600;
         color: #58A6FF;
         margin-top: 12px;
-        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+        box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
     }
 
-    /* Sidebar Labels */
+    /* Sidebar Dropdowns and Inputs */
+    div[data-baseweb="select"] > div, 
+    div[data-baseweb="input"] > div,
+    div[data-baseweb="popover"],
+    ul[role="listbox"] {
+        background-color: #0E131F !important;
+        color: #FFFFFF !important;
+        border-color: rgba(255, 255, 255, 0.12) !important;
+        border-radius: 8px !important;
+    }
+
+    li[role="option"] {
+        background-color: #0E131F !important;
+        color: #CBD5E1 !important;
+    }
+    li[role="option"]:hover {
+        background-color: #1E293B !important;
+    }
+
     [data-testid="stSidebar"] label p {
         font-family: 'JetBrains Mono', monospace !important;
         font-size: 11px !important;
-        font-weight: 600 !important;
+        font-weight: 700 !important;
         text-transform: uppercase !important;
-        color: #8B949E !important;
+        color: #94A3B8 !important;
     }
 
     /* Action Trigger Button */
     div.stButton > button {
-        background: linear-gradient(135deg, #E23636 0%, #B31919 100%);
+        background: linear-gradient(135deg, #E23636 0%, #991B1B 100%);
         color: #FFFFFF;
         font-family: 'JetBrains Mono', monospace;
         font-size: 13px;
-        font-weight: 700;
+        font-weight: 800;
         text-transform: uppercase;
-        letter-spacing: 0.05em;
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        border-radius: 6px;
-        padding: 10px 20px;
+        letter-spacing: 0.06em;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 8px;
+        padding: 12px 24px;
         width: 100%;
-        box-shadow: 0 4px 14px rgba(226, 54, 54, 0.35);
-        transition: all 0.2s ease;
+        box-shadow: 0 4px 18px rgba(226, 54, 54, 0.4);
+        transition: all 0.25s ease;
     }
     div.stButton > button:hover {
-        background: linear-gradient(135deg, #FF4D4D 0%, #D62222 100%);
+        background: linear-gradient(135deg, #EF4444 0%, #B91C1C 100%);
         border-color: #58A6FF;
-        box-shadow: 0 6px 18px rgba(226, 54, 54, 0.55);
+        box-shadow: 0 6px 24px rgba(226, 54, 54, 0.6), 0 0 12px rgba(88, 166, 255, 0.3);
+        transform: translateY(-1px);
     }
 
     /* Telemetry KPI Metrics */
     [data-testid="stMetric"] {
-        background: rgba(18, 22, 31, 0.85);
+        background: rgba(13, 17, 26, 0.75);
+        backdrop-filter: blur(12px);
         border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 6px;
-        padding: 12px 16px;
-        box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.6), 0 4px 12px rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+        padding: 14px 18px;
+        box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.6), 0 6px 16px rgba(0, 0, 0, 0.3);
     }
     [data-testid="stMetricLabel"] p {
         font-family: 'JetBrains Mono', monospace !important;
         font-size: 10px !important;
-        font-weight: 600 !important;
+        font-weight: 700 !important;
         text-transform: uppercase !important;
-        color: #8B949E !important;
+        color: #64748B !important;
     }
     [data-testid="stMetricValue"] div {
         font-family: 'JetBrains Mono', monospace !important;
-        font-size: 18px !important;
-        font-weight: 700 !important;
+        font-size: 19px !important;
+        font-weight: 800 !important;
         color: #58A6FF !important;
     }
 </style>
