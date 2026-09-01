@@ -1,3 +1,5 @@
+
+
 import streamlit as st
 import yfinance as yf
 import pandas as pd
@@ -11,7 +13,7 @@ import time
 # PAGE CONFIGURATION & METADATA
 # ==========================================
 st.set_page_config(
-    page_title="FinIntel Terminal | Institutional Retail Intelligence",
+    page_title="YoloTech Terminal | Institutional Retail Intelligence",
     page_icon="🕸️",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -290,7 +292,7 @@ st.markdown("""
 # Top Navigation Bar
 st.markdown("""
 <div class="terminal-nav">
-    <div class="terminal-title">🕸️ FININTEL WORKSTATION // MULTI-AGENT INTELLIGENCE</div>
+    <div class="terminal-title">🕸️ YOLOTECH WORKSTATION // MULTI-AGENT INTELLIGENCE</div>
     <div class="terminal-status">● LIVE FEED CONNECTED</div>
 </div>
 """, unsafe_allow_html=True)
